@@ -1,0 +1,20 @@
+{
+  "name": "turvis",
+  "version": "1.0.0",
+  "description": "Validate incoming requests to detect attempts of attacks",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/buerokratt/turvis.git"
+  },
+  "author": "Devtailor",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/buerokratt/turvis/issues"
+  },
+  "homepage": "https://github.com/buerokratt/turvis#readme"
+}
