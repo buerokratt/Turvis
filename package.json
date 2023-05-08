@@ -4,11 +4,14 @@
   "description": "Validate incoming requests to detect attempts of attacks",
   "main": "src/main.ts",
   "scripts": {
-    "start": "node dist/main",
+    "start": "npm run build && node dist/main",
+    "prebuild": "rimraf dist",
     "build": "tsc -p tsconfig.json",
     "test": "test",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "format:check": "prettier --check \"src/**/*.ts\""
+    "format:check": "prettier --check \"src/**/*.ts\"",
+    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
+    "lint:check": "eslint \"{src,apps,libs,test}/**/*.ts\""
   },
   "repository": {
     "type": "git",
@@ -21,10 +24,17 @@
   },
   "homepage": "https://github.com/buerokratt/turvis#readme",
   "dependencies": {
-    "fastify": "^4.17.0"
+    "fastify": "^4.17.0",
+    "rimraf": "^5.0.0"
   },
   "devDependencies": {
     "@types/node": "^20.1.0",
+    "@typescript-eslint/eslint-plugin": "^5.59.2",
+    "@typescript-eslint/parser": "^5.59.2",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-sort-export-all": "^1.4.1",
     "prettier": "^2.8.8",
     "typescript": "^5.0.4"
   }

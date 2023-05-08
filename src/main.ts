@@ -6,8 +6,8 @@ const HOST = '::';
 
 const app = fastify({ logger: true });
 
-app.get('/', async (request, response) => {
-  return { message: 'ok' };
+app.get('/', async (_, response) => {
+  response.send({ message: 'ok' });
 });
 
 app.listen({ port: PORT, host: HOST }, (err, address) => {
