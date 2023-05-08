@@ -1,19 +1,13 @@
-import fastify from 'fastify';
+import { bootstrap } from './bootstrap';
 
 // pass in the port with configuration
 const PORT = 8060;
 const HOST = '::';
 
-const app = fastify({ logger: true });
-
-app.get('/', async (_, response) => {
-  response.send({ message: 'ok' });
-});
-
-app.listen({ port: PORT, host: HOST }, (err, address) => {
-  if (err) {
-    app.log.error(err);
+const app = bootstrap({ logger: true });
+app.listen({ port: PORT, host: HOST }, (error, address) => {
+  if (error) {
+    console.error(error);
     process.exit(1);
   }
-  app.log.info(`Turvis is listening requests at ${address}`);
 });
