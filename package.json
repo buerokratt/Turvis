@@ -4,7 +4,8 @@
   "description": "Validate incoming requests to detect attempts of attacks",
   "main": "src/index.js",
   "scripts": {
-    "start": "node src/index.js",
+    "start": "node dist/main.js",
+    "build": "tsc -p tsconfig.json",
     "test": "test"
   },
   "repository": {
@@ -16,5 +17,12 @@
   "bugs": {
     "url": "https://github.com/buerokratt/turvis/issues"
   },
-  "homepage": "https://github.com/buerokratt/turvis#readme"
+  "homepage": "https://github.com/buerokratt/turvis#readme",
+  "dependencies": {
+    "fastify": "^4.17.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.1.0",
+    "typescript": "^5.0.4"
+  }
 }
