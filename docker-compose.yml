@@ -5,7 +5,7 @@ services:
     container_name: turvis
     image: buerokratt/turvis
     ports: 
-      - 3030:3030
+      - 8060:8060
 
 networks:
   turvis:

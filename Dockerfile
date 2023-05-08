@@ -32,8 +32,8 @@ RUN npm run build
 
 # Copy production dependencies, build artifacts and runtime configuration and run
 FROM base
-COPY --chown=node:node --from=dependencies /api/node_modules ./node_modules
-COPY --chown=node:node --from=build /api/dist ./dist
+COPY --chown=node:node --from=dependencies /turvis/node_modules ./node_modules
+COPY --chown=node:node --from=build /turvis/dist ./dist
 COPY --chown=node:node config/production.env ./config/
 ENV NODE_ENV=production
 CMD npm run start:prod

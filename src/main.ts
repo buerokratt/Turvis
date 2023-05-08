@@ -1,18 +1,19 @@
 import fastify from "fastify";
 
-const app = fastify();
-
 // pass in the port with configuration
-const PORT = 3030
+const PORT = 8060
+const HOST = "::"
+
+const app = fastify()
 
 app.get('/', async (request, response) => {
     return { message: 'ok'}
 });
 
-app.listen({ port: PORT }, (err, address) => {
+app.listen({ port: PORT, host: HOST }, (err, address) => {
     if (err) {
-        console.error(err)
+        app.log.error(err)
         process.exit(1)
       }
-      console.log(`Turvis is listening at ${address}`)
+      app.log.info(`Turvis is listening requests at ${address}`)
 });
