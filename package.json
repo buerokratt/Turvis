@@ -6,7 +6,9 @@
   "scripts": {
     "start": "node dist/main",
     "build": "tsc -p tsconfig.json",
-    "test": "test"
+    "test": "test",
+    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "format:check": "prettier --check \"src/**/*.ts\""
   },
   "repository": {
     "type": "git",
@@ -23,6 +25,7 @@
   },
   "devDependencies": {
     "@types/node": "^20.1.0",
+    "prettier": "^2.8.8",
     "typescript": "^5.0.4"
   }
 }
