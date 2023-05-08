@@ -1,13 +1,13 @@
 import fastify from "fastify";
 
 // pass in the port with configuration
-const PORT = 8060
-const HOST = "::"
+const PORT = 8060;
+const HOST = "::";
 
-const app = fastify()
+const app = fastify({logger: true})
 
 app.get('/', async (request, response) => {
-    return { message: 'ok'}
+    return { message: 'ok'};
 });
 
 app.listen({ port: PORT, host: HOST }, (err, address) => {

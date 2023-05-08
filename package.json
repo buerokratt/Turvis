@@ -2,10 +2,9 @@
   "name": "turvis",
   "version": "1.0.0",
   "description": "Validate incoming requests to detect attempts of attacks",
-  "main": "src/index.js",
+  "main": "src/main.ts",
   "scripts": {
-    "start": "node dist/main.js",
-    "start:prod": "node dist/main",
+    "start": "node dist/main",
     "build": "tsc -p tsconfig.json",
     "test": "test"
   },
