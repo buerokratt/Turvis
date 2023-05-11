@@ -1,0 +1,28 @@
+version: '3.9'
+
+services:
+  ruuter-test: 
+    container_name: ruuter-test
+    image: buerokratt/ruuter-test
+    build:
+      context: .
+      dockerfile: Dockerfile.ruuter.yml
+    ports:
+      - 8500:8080
+      - 8501:8501
+    networks:
+      - turvis-test
+
+  turvis-ruuter-test:
+    container_name: turvis-ruuter-test
+    image: buerokratt/turvis
+    build:
+      context: .
+    ports: 
+      - 8505:8060
+    networks:
+      - turvis-test
+
+networks:
+  turvis-test:
+    driver: bridge

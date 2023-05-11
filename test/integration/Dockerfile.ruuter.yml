@@ -1,0 +1,33 @@
+FROM azul/zulu-openjdk:17.0.4.1-17.36.17-arm64 as build
+WORKDIR /workspace/app
+
+RUN apt-get update
+RUN apt-get install git -y
+RUN git clone https://github.com/buerokratt/Ruuter .
+
+RUN chmod 754 ./gradlew
+RUN ./gradlew -Pprod clean bootJar
+RUN mkdir -p build/libs && (cd build/libs; jar -xf *.jar)
+
+FROM openjdk:17-jdk
+VOLUME /build/tmp
+
+ARG DEPENDENCY=/workspace/app/build/libs
+COPY --from=build ${DEPENDENCY}/BOOT-INF/lib /app/lib
+COPY --from=build ${DEPENDENCY}/META-INF /app/META-INF
+COPY --from=build ${DEPENDENCY}/BOOT-INF/classes /app
+
+ENV application.config-path=/DSL
+ENV JAVA_TOOL_OPTIONS -agentlib:jdwp=transport=dt_socket,address=*:8501,server=y,suspend=n
+
+RUN adduser ruuter
+RUN mkdir logs
+## RUN mkdir DSL
+COPY ./configs/DSL DSL
+RUN chown ruuter:ruuter /logs
+RUN chown -R ruuter:ruuter /app
+RUN chown -R ruuter:ruuter /DSL
+USER ruuter
+
+ENTRYPOINT ["java","-cp","app:app/lib/*","ee.buerokratt.ruuter.RuuterApplication"]
+
