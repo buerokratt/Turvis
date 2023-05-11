@@ -6,6 +6,7 @@
   "scripts": {
     "start": "npm run build && node dist/main",
     "start:dev": "tsc -w & nodemon -q -w dist dist/main",
+    "start:prod": "node dist/main",
     "prebuild": "rimraf dist",
     "build": "tsc -p tsconfig.json",
     "test": "jest",
