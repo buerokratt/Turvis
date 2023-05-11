@@ -1,0 +1,12 @@
+version: '3.9'
+
+services:
+  turvis:
+    container_name: turvis
+    image: buerokratt/turvis
+    ports: 
+      - 8060:8060
+
+networks:
+  turvis:
+    driver: bridge
