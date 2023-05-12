@@ -24,6 +24,7 @@ RUN adduser ruuter
 RUN mkdir logs
 ## RUN mkdir DSL
 COPY ./configs/DSL DSL
+COPY ./configs/application.yml /app/application.yml
 RUN chown ruuter:ruuter /logs
 RUN chown -R ruuter:ruuter /app
 RUN chown -R ruuter:ruuter /DSL

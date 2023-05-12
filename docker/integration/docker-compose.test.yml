@@ -3,10 +3,12 @@ version: '3.9'
 services:
   ruuter-test: 
     container_name: ruuter-test
-    image: buerokratt/ruuter-test
-    build:
-      context: .
-      dockerfile: Dockerfile.ruuter.yml
+    image: turvis/ruuter
+    #build:
+    #  context: .
+    #  dockerfile: Dockerfile.ruuter.yml
+    volumes:
+      - ./configs/DSL:/DSL
     ports:
       - 8500:8080
       - 8501:8501

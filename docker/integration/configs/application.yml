@@ -8,6 +8,16 @@ application:
     allowedMethodTypes: [ POST, GET ]
     headers:
       header: value
+
+    externalForwarding:
+      method: POST
+      endpoint: "http://turvis-ruuter-test:8060/ruuter-incoming"
+      paramsToPass:
+        GET: true
+        POST: true
+        headers: true
+      proceedPredicate:
+        httpStatusCode: [ 200..202, 204 ]
   httpCodesAllowList: [ 200, 201, 202 ]
   defaultDslInCaseOfException:
     dsl: default-dsl
