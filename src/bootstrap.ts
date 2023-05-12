@@ -2,7 +2,7 @@ import { IncomingMessage, Server, ServerResponse } from 'http';
 
 import fastify, { FastifyInstance } from 'fastify';
 
-import  { incoming } from './api/incoming';
+import { incoming } from './api/incoming';
 
 export const bootstrap = (options = {}) => {
   const application: FastifyInstance<Server, IncomingMessage, ServerResponse> = fastify(options);

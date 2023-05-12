@@ -8,7 +8,7 @@ const getHandler: RouteHandler = async (request: FastifyRequest, reply: FastifyR
   const headers: IncomingHttpHeaders = request.headers;
   const queryParams = request.query;
   analyze(headers, queryParams, null);
-  reply.send({ code: 200, status: 'OK'});
+  reply.send({ code: 200, status: 'OK' });
 };
 
 const postHandler: RouteHandler = async (request: FastifyRequest, reply: FastifyReply) => {
@@ -16,7 +16,7 @@ const postHandler: RouteHandler = async (request: FastifyRequest, reply: Fastify
   const body = request.body;
   const queryParams = request.query;
   analyze(headers, queryParams, body);
-  reply.send({ code: 200, status: 'OK'});
+  reply.send({ code: 200, status: 'OK' });
 };
 
 const get: RouteOptions = {
