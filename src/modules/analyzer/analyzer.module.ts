@@ -1,3 +1,3 @@
-export const analyze = (headers: any, queryParams: any, body: any) => {
-
+export const analyze = (headers: any, params: any, body: any) => {
+    
 };
