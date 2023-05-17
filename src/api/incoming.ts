@@ -7,6 +7,7 @@ import { analyze } from '../modules/analyzer/analyzer.module';
 const getHandler: RouteHandler = async (request: FastifyRequest, reply: FastifyReply) => {
   const headers: IncomingHttpHeaders = request.headers;
   const queryParams = request.query;
+  console.log("params: ", JSON.stringify(queryParams));
   analyze(headers, queryParams, null);
   reply.send({ code: 200, status: 'OK' });
 };
@@ -15,6 +16,7 @@ const postHandler: RouteHandler = async (request: FastifyRequest, reply: Fastify
   const headers: IncomingHttpHeaders = request.headers;
   const body = request.body;
   const queryParams = request.query;
+  console.log("params: ", JSON.stringify(queryParams));
   analyze(headers, queryParams, body);
   reply.send({ code: 200, status: 'OK' });
 };
