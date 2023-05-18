@@ -3,23 +3,24 @@ version: '3.9'
 services:
   ruuter-test: 
     container_name: ruuter-test
-    image: turvis/ruuter
-    #build:
-    #  context: .
-    #  dockerfile: Dockerfile.ruuter.yml
+    build:
+      context: .
+      dockerfile: ruuter/Dockerfile.ruuter
+      no_cache: true
     volumes:
-      - ../ruuter/configs/DSL:/DSL
+      - ./configs/DSL:/DSL
     ports:
       - 8500:8080
       - 8501:8501
     networks:
       - turvis-test
 
-  turvis-ruuter-test:
+  turvis-test:
     container_name: turvis-test
-    image: buerokratt/turvis
     build:
-      context: .
+      context: ..
+      dockerfile: Dockerfile
+      no_cache: true
     ports: 
       - 8505:8060
     networks:

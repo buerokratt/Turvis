@@ -11,7 +11,7 @@ application:
 
     externalForwarding:
       method: POST
-      endpoint: "http://turvis-ruuter-test:8060/ruuter-incoming"
+      endpoint: "http://turvis-test:8060/ruuter-incoming"
       paramsToPass:
         GET: true
         POST: true
