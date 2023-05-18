@@ -1,0 +1,23 @@
+# Base image
+FROM ubuntu:latest
+
+RUN apt-get update && \
+    apt-get install -y curl && apt-get install -y cron
+
+WORKDIR /app
+
+COPY execute.sh /app/execute.sh
+COPY ./test /app/test
+
+RUN chmod +x /app/execute.sh
+
+# Add cron job to execute the script every 60 seconds
+RUN echo "*/60 * * * * /app/execute.sh >> /var/log/cron.log 2>&1" > /etc/cron.d/curl-script-cron
+
+# Give execution rights to the cron job
+RUN chmod 0644 /etc/cron.d/curl-script-cron
+
+RUN touch /var/log/cron.log
+
+# Run cron in the foreground
+CMD cron && tail -f /var/log/cron.log
