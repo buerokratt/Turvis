@@ -35,4 +35,4 @@ FROM base
 COPY --chown=node:node --from=dependencies /turvis/node_modules ./node_modules
 COPY --chown=node:node --from=build /turvis/dist ./dist
 ENV NODE_ENV=production
-CMD npm run start
+CMD npm run start:prod
