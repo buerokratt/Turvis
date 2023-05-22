@@ -13,12 +13,17 @@ execute_curl_command() {
     curl_command=$(grep -o 'curl .*' "$file")
 
     # Execute the curl command and retrieve the HTTP status code
-    http_code=$(eval "$curl_command" -o /dev/null -w "%{http_code}")
+    response=$(eval "$curl_command" -s -w "%{http_code}")
+
+    # Extract the HTTP response code
+    http_code=${response:(-3)}
+
+    # Extract the response content
+    response_content=${response%???}
 
     mkdir -p "$parentdirectory/$http_code"
     filename=$(basename "$file")
-
-    cp "$file" "$parentdirectory/$http_code/$filename"
+    echo "$response_content" > "$parentdirectory/$http_code/$filename"
 }
 
 # Function to replace "{{endpoint}}" placeholder with value from .endpoint file
