@@ -6,6 +6,8 @@ services:
     image: buerokratt/turvis
     ports: 
       - 8060:8060
+    networks:
+      - turvis
 
 networks:
   turvis:

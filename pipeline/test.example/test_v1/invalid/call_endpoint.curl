@@ -1,1 +1,1 @@
-curl -X POST {{endpoint}}/get/me
+curl -X POST {{endpoint}}/ruuter-incoming

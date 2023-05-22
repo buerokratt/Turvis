@@ -8,10 +8,12 @@ services:
       dockerfile: Dockerfile
       no_cache: true
     volumes:
-      -./test:/app/test
+      - ./test:/app/test
     ports: 
-      - 8060:8060
+      - 8061:8061
+    networks:
+      - turvis_turvis
 
 networks:
-  turvis-test:
-    driver: bridge
+  turvis_turvis:
+    external: true

@@ -86,7 +86,13 @@ test
 
 - starting the pipeline:
   ```
-  cd pipeline && make start
+  cd pipeline && make start 
   ```
   -  it will start container that executes the scripts every 60 seconds (CRON)
-  -  it mounts `<root>/pipeline/test` directory to container. files can be placed in this folder for testing, setup based on guidelines outlined in file structure.
+  -  it mounts `<root>/pipeline/test` directory to container. files can be placed in this folder for testing, setup based on guidelines outlined in file structure. Quickest way to test is to copy test_v1 directory from test.example to test and wait for cron to execute.
+  -  if something is changed, rebuild the image with `docker-compose build`
+  -  check for logs with: `docker logs turvis-pipeline`
+  -  test queries should look like this:
+  `curl -X post {{endpoint}}/path/to/call`
+  when {{endpoint}} is not included, the script will be executed "as-is" meaning that if you have some other URL, then that would be executed directly, e.g. `curl www.google.com` would execute against `google.com`
+  - hints: for the pipeline to call turvis, it needs to be on the same network in order to be visible. For this reason, docker-compose file specifies turvis_turvis network as external
