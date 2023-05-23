@@ -7,6 +7,11 @@ services:
       context: .
       dockerfile: ruuter/Dockerfile.ruuter
       no_cache: true
+      args:
+        - GIT_REPO_URL=${GIT_REPO_URL}
+        - GIT_BRANCH=${GIT_BRANCH}
+        - GIT_COMMIT=${GIT_COMMIT}
+        - GIT_TAG=${GIT_TAG}
     volumes:
       - ./configs/DSL:/DSL
     ports:

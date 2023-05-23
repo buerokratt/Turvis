@@ -1,9 +1,20 @@
 FROM azul/zulu-openjdk:17.0.4.1-17.36.17-arm64 as build
+
+ARG GIT_REPO_URL=https://github.com/buerokratt/Ruuter
+ARG GIT_BRANCH=main
+ARG GIT_COMMIT=latest
+ARG GIT_TAG=latest
+
+
 WORKDIR /workspace/app
 
 RUN apt-get update
 RUN apt-get install git -y
-RUN git clone https://github.com/buerokratt/Ruuter .
+RUN git clone $GIT_REPO_URL .
+
+RUN if [ "$GIT_BRANCH" != "main" ]; then git checkout $GIT_BRANCH; fi \
+    && if [ "$GIT_COMMIT" != "latest" ]; then git checkout $GIT_COMMIT; fi \
+    && if [ "$GIT_TAG" != "latest" ]; then git checkout tags/$GIT_TAG; fi
 
 RUN chmod 754 ./gradlew
 RUN ./gradlew -Pprod clean bootJar
@@ -22,6 +33,7 @@ ENV JAVA_TOOL_OPTIONS -agentlib:jdwp=transport=dt_socket,address=*:8501,server=y
 
 RUN adduser ruuter
 RUN mkdir logs
+
 ## RUN mkdir DSL
 COPY ./configs/DSL DSL
 COPY ./configs/application.yml /app/application.yml
