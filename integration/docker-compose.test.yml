@@ -1,0 +1,36 @@
+version: '3.9'
+
+services:
+  ruuter-test: 
+    container_name: ruuter-test
+    build:
+      context: .
+      dockerfile: ruuter/Dockerfile.ruuter
+      no_cache: true
+      args:
+        - GIT_REPO_URL=${GIT_REPO_URL}
+        - GIT_BRANCH=${GIT_BRANCH}
+        - GIT_COMMIT=${GIT_COMMIT}
+        - GIT_TAG=${GIT_TAG}
+    volumes:
+      - ./configs/DSL:/DSL
+    ports:
+      - 8500:8080
+      - 8501:8501
+    networks:
+      - turvis-test
+
+  turvis-test:
+    container_name: turvis-test
+    build:
+      context: ..
+      dockerfile: Dockerfile
+      no_cache: true
+    ports: 
+      - 8505:8060
+    networks:
+      - turvis-test
+
+networks:
+  turvis-test:
+    driver: bridge
