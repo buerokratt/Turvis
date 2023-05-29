@@ -1,0 +1,19 @@
+version: '3.9'
+
+services:
+  turvis-pipeline:
+    container_name: turvis-pipeline
+    build:
+      context: .
+      dockerfile: Dockerfile
+      no_cache: true
+    volumes:
+      - ./test:/app/test
+    ports: 
+      - 8061:8061
+    networks:
+      - turvis_turvis
+
+networks:
+  turvis_turvis:
+    external: true
