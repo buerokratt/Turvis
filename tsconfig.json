@@ -1,6 +1,11 @@
 {
   "compilerOptions": {
     "module": "commonjs",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "types": ["node", "jest"],
     "declaration": true,
     "removeComments": true,
     "emitDecoratorMetadata": true,
@@ -11,6 +16,8 @@
     "outDir": "./dist",
     "baseUrl": "./",
     "incremental": true,
-    "strict": true
-  }
+    "strict": true,
+    "allowJs": true
+  },
+  "include": ["src", "test"],
 }
