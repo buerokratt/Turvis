@@ -10,14 +10,14 @@ export interface PatternInfo {
 
 export function lookupRegex(path: string, parameters?: {} | []): PatternInfo {
   const filePath: PathLike = join(REGULAR_EXPRESSIONS_DIR, path);
-  const pattern: string = readFileSync(filePath, 'utf8').trim();
+  let pattern: string = readFileSync(filePath, 'utf8').trim();
 
   if (Array.isArray(parameters)) {
-    return withPositionalParameters(path, parameters);
+    pattern = withPositionalParameters(pattern, parameters);
   }
 
   if (parameters && typeof parameters === 'object') {
-    return withNamedParameters(pattern, parameters);
+    pattern = withNamedParameters(pattern, parameters);
   }
 
   return {
@@ -26,22 +26,25 @@ export function lookupRegex(path: string, parameters?: {} | []): PatternInfo {
   };
 }
 
-function withNamedParameters(pattern: string, parameters: {}): PatternInfo {
-  // verify if the pattern that was loaded can be used with those parameters
+function withNamedParameters(pattern: string, parameters: {}): string {
+  // verify if the pattern that was loaded can be used with those parameters?
 
-  // Implementation for named parameters
-  // Replace or modify the pattern based on the provided parameters
-  return {
-    pattern,
-    path: '',
-  };
+  let replacedPattern = pattern;
+  for (const [key, value] of Object.entries(parameters)) {
+    const placeholder = `__${key}__`;
+    replacedPattern = replacedPattern.split(placeholder).join(value as string);
+  }
+
+  return replacedPattern;
 }
 
-function withPositionalParameters(path: string, parameters: any[]): PatternInfo {
+function withPositionalParameters(pattern: string, parameters: any[]): string {
   // Implementation for positional parameters
-  // Replace or modify the pattern based on the provided parameters
-  return {
-    pattern: '',
-    path,
-  };
+  let replacedPattern = pattern;
+  for (let i = 0; i < parameters.length; i++) {
+    const placeholder = new RegExp(`__${i}__`, 'g');
+    replacedPattern = replacedPattern.replace(placeholder, parameters[i]);
+  }
+
+  return replacedPattern;
 }

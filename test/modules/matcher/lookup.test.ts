@@ -26,4 +26,40 @@ describe('lookupRegex', () => {
     expect(mockReadFileSync).toHaveBeenCalledWith('patterns/expressions/' + path, 'utf8');
     expect(result).toEqual(expectedResult);
   });
+
+  it('should use parameters in regular expression and replace the placeholders', () => {
+    const path = 'patternfile';
+    const pattern = '^.{__minLength__,__maxLength__}$';
+
+    const expectedResult: PatternInfo = {
+      pattern: '^.{5,10}$',
+      path: 'patternfile',
+    };
+
+    mockReadFileSync.mockReturnValueOnce(pattern);
+
+    const result = lookupRegex(path, {minLength: 5, maxLength: 10});
+
+    expect(mockReadFileSync).toHaveBeenCalledWith('patterns/expressions/' + path, 'utf8');
+    expect(result).toEqual(expectedResult);
+  });
+
+  it('should use positional parameters in regular expression', () => {
+    const path = 'patternfile';
+    const pattern = '^.(__0__|__1__|__2__)$';
+
+    const expectedResult: PatternInfo = {
+      pattern: '^.(a|b|c)$',
+      path: 'patternfile',
+    };
+
+    mockReadFileSync.mockReturnValueOnce(pattern);
+
+    const result = lookupRegex(path, ['a', 'b', 'c']);
+
+    expect(mockReadFileSync).toHaveBeenCalledWith('patterns/expressions/' + path, 'utf8');
+    expect(result).toEqual(expectedResult);
+  })
+
+
 });
