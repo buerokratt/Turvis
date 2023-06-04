@@ -13,7 +13,7 @@ describe('lookupRegex', () => {
 
   it('should return the pattern and path when reading the file', () => {
     const path = 'patternfile';
-    const pattern = 'abc|def';
+    const pattern = new RegExp('abc|def');
     const expectedResult: PatternInfo = {
       pattern,
       path: 'patternfile',
@@ -32,7 +32,7 @@ describe('lookupRegex', () => {
     const pattern = '^.{__minLength__,__maxLength__}$';
 
     const expectedResult: PatternInfo = {
-      pattern: '^.{5,10}$',
+      pattern: new RegExp('^.{5,10}$'),
       path: 'patternfile',
     };
 
@@ -46,10 +46,10 @@ describe('lookupRegex', () => {
 
   it('should use positional parameters in regular expression', () => {
     const path = 'patternfile';
-    const pattern = '^.(__0__|__1__|__2__)$';
+    const pattern = new RegExp('^.(__0__|__1__|__2__)$');
 
     const expectedResult: PatternInfo = {
-      pattern: '^.(a|b|c)$',
+      pattern: new RegExp('^.(a|b|c)$'),
       path: 'patternfile',
     };
 

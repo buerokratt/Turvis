@@ -4,6 +4,7 @@ import { FastifyInstance, FastifyPluginOptions, FastifyReply, FastifyRequest } f
 import { ExecutionResult } from 'src/modules/regex/execute';
 import { PatternInfo } from 'src/modules/regex/lookup';
 import { expressions } from 'src/modules/regex/regex.module';
+import { error } from 'console';
 
 export const REGEX_API_URL = '/regex';
 
@@ -19,12 +20,14 @@ const regexHandler = async (request: FastifyRequest, reply: FastifyReply) => {
 
   // Extract the file path from the request URL
   const filePath = (request as any).params['*'];
+  const params: Map<string, string> = request.query as any;
 
   try {
-    const pattern: PatternInfo = expressions.lookup(filePath);
+    const pattern: PatternInfo = expressions.lookup(filePath, params);
     const result: ExecutionResult = expressions.execute(body, pattern);
 
     if (result.error) {
+      console.log(result.error)
       reply.code(400).send(result.error);
     }
     reply.code(200).send({ content: body, result: result.result });

@@ -4,13 +4,12 @@ import { join } from 'path';
 const REGULAR_EXPRESSIONS_DIR = 'patterns/expressions';
 
 export interface PatternInfo {
-  pattern: string;
+  pattern: RegExp;
   path: string;
 }
-
 export function lookupRegex(path: string, parameters?: {} | []): PatternInfo {
   const filePath: PathLike = join(REGULAR_EXPRESSIONS_DIR, path);
-  let pattern: string = readFileSync(filePath, 'utf8').trim();
+  let pattern: RegExp = new RegExp(readFileSync(filePath, 'utf8'));
 
   if (Array.isArray(parameters)) {
     pattern = withPositionalParameters(pattern, parameters);
@@ -26,25 +25,21 @@ export function lookupRegex(path: string, parameters?: {} | []): PatternInfo {
   };
 }
 
-function withNamedParameters(pattern: string, parameters: {}): string {
-  // verify if the pattern that was loaded can be used with those parameters?
-
-  let replacedPattern = pattern;
+function withNamedParameters(pattern: RegExp, parameters: {}): RegExp {
+  let replacedPattern = pattern.toString();
   for (const [key, value] of Object.entries(parameters)) {
     const placeholder = `__${key}__`;
     replacedPattern = replacedPattern.split(placeholder).join(value as string);
   }
-
-  return replacedPattern;
+  return new RegExp(replacedPattern.slice(1, -1));
 }
 
-function withPositionalParameters(pattern: string, parameters: any[]): string {
-  // Implementation for positional parameters
-  let replacedPattern = pattern;
+function withPositionalParameters(pattern: RegExp, parameters: any[]): RegExp {
+  let replacedPattern = pattern.toString();
   for (let i = 0; i < parameters.length; i++) {
     const placeholder = new RegExp(`__${i}__`, 'g');
-    replacedPattern = replacedPattern.replace(placeholder, parameters[i]);
+    replacedPattern = replacedPattern.replace(placeholder.toString(), parameters[i]);
   }
 
-  return replacedPattern;
+  return new RegExp(replacedPattern.slice(1, -1));
 }
