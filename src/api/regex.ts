@@ -21,10 +21,11 @@ const regexHandler = async (request: FastifyRequest, reply: FastifyReply) => {
   const filePath = (request as any).params['*'];
   const params: Map<string, string> = request.query as any;
 
+  console.log(request.url);
   try {
     let passedParams: any = params;
-    if(params && passedParams['paramsList']) {
-      passedParams = passedParams['paramsList'];
+    if(params && passedParams['params']) {
+      passedParams = passedParams['params'];
     }
     const pattern: PatternInfo = expressions.lookup(filePath, passedParams);
     const result: ExecutionResult = expressions.execute(body, pattern);

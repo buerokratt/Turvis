@@ -75,7 +75,7 @@ describe('Regex API test', () => {
   it('should execute regex against the API with positioned parameters', async() => {
     mockReadFileSync.mockReturnValueOnce("__0__|__1__|__2__");
 
-    const queryParams: any = {"paramsList": ['Arne', "Brutus", "Collie"]};
+    const queryParams: any = {"params": ['Arne', "Brutus", "Collie"]};
     const response = await app.inject({
       method: 'POST',
       url: '/regex/',
