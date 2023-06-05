@@ -51,10 +51,41 @@ describe('Regex API test', () => {
       headers: {
         "Content-Type": 'text/plain',
       },
-      payload: 'margera'
+      payload: 'aloha!!!'
     });
 
-    expect(response.statusCode).toBe(200);
-    
+    expect(response.statusCode).toBe(200); 
+  })
+
+  it('should execute regex against the API with JSON and see 200', async() => {
+    mockReadFileSync.mockReturnValueOnce("(Arne|Brutus)");
+
+    const response = await app.inject({
+      method: 'POST',
+      url: '/regex/',
+      headers: {
+        "Content-Type": 'application/json',
+      },
+      payload:'{"name": "Arne"}',
+    });
+
+    expect(response.statusCode).toBe(200); 
+  }),
+
+  it('should execute regex against the API with positioned parameters', async() => {
+    mockReadFileSync.mockReturnValueOnce("__0__|__1__|__2__");
+
+    const queryParams: any = {"paramsList": ['Arne', "Brutus", "Collie"]};
+    const response = await app.inject({
+      method: 'POST',
+      url: '/regex/',
+      query: queryParams,
+      headers: {
+        "Content-Type": 'text/plain',
+      },
+      payload:'Arne',
+    });
+
+    expect(response.statusCode).toBe(200); 
   })
 });

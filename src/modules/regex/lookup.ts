@@ -11,7 +11,7 @@ export function lookupRegex(path: string, parameters?: {} | []): PatternInfo {
   const filePath: PathLike = join(REGULAR_EXPRESSIONS_DIR, path);
   let pattern: RegExp = new RegExp(readFileSync(filePath, 'utf8'));
 
-  if (Array.isArray(parameters)) {
+  if (parameters && Array.isArray(parameters)) {
     pattern = withPositionalParameters(pattern, parameters);
   }
 

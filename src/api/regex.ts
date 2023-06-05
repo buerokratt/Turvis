@@ -18,17 +18,20 @@ const regexHandler = async (request: FastifyRequest, reply: FastifyReply) => {
     return;
   }*/
 
-  // Extract the file path from the request URL
   const filePath = (request as any).params['*'];
   const params: Map<string, string> = request.query as any;
 
   try {
-    const pattern: PatternInfo = expressions.lookup(filePath, params);
+    let passedParams: any = params;
+    if(params && passedParams['paramsList']) {
+      passedParams = passedParams['paramsList'];
+    }
+    const pattern: PatternInfo = expressions.lookup(filePath, passedParams);
     const result: ExecutionResult = expressions.execute(body, pattern);
 
     if (result.error) {
-      console.log(result.error)
-      reply.code(400).send(result.error);
+      console.log(result.error);
+      throw new Error(result.error);
     }
     reply.code(200).send({ content: body, result: result.result });
   } catch (error) {

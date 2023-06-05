@@ -15,10 +15,16 @@ const directory: PathOrFileDescriptor = './patterns/expressions';
 export function execute(content: string, pattern: PatternInfo): ExecutionResult {
   try {
     const regex = pattern.pattern;
-    const result = regex.test(content);
+    let result;
+    if (typeof content !== 'string') {
+      result = regex.test(JSON.stringify(content));
+    }
+    else {
+      result = regex.test(content);
+    }
 
     if(!result) {
-      throw new Error("unable to match " + content + ". used pattern:" + pattern.pattern);
+      throw new Error("unable to match " + content + ". used pattern: " + pattern.pattern);
     }
     return {
       value: content,
