@@ -1,4 +1,12 @@
 {
-  "bail": 1,
-  "verbose": true
+  "moduleFileExtensions": ["js", "json", "ts"],
+  "rootDir": ".",
+  "testEnvironment": "node",
+  "testRegex": ".test.ts$",
+  "moduleNameMapper": {
+    "src/(.*)": "<rootDir>/src/$1"
+  },
+  "transform": {
+    "^.+\\.(t|j)s$": "ts-jest"
+  }
 }

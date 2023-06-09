@@ -4,7 +4,7 @@ import { bootstrap } from './bootstrap';
 const PORT = 8060;
 const HOST = '::';
 
-const app = bootstrap({ logger: true });
+export const app = bootstrap({ logger: true });
 app.listen({ port: PORT, host: HOST }, (error, address) => {
   if (error) {
     console.error(error);

@@ -96,3 +96,19 @@ test
   `curl -X post {{endpoint}}/path/to/call`
   when {{endpoint}} is not included, the script will be executed "as-is" meaning that if you have some other URL, then that would be executed directly, e.g. `curl www.google.com` would execute against `google.com`
   - hints: for the pipeline to call turvis, it needs to be on the same network in order to be visible. For this reason, docker-compose file specifies turvis_turvis network as external
+
+
+## Feature/3
+Regular expression management
+
+An endpoint to allow calling regular expression on the content.
+
+- make a POST request to `/regex/path/of/expression` and validate body
+it is possible to pass extra parameters to regex:
+- - named parameters:
+   `/regex/email?minWidth=4&maxWidth=10` and it expects to find a regular expression and the regular expression itself has placeholders, e.g.
+   `/^.{__minWidth__,__maxWidth__}$/`
+- - positional parameters:
+   `/regex/oneOf?params=a&params=b&params=c` and the pattern would be:
+   `__1__|__2___|__3__` 
+
