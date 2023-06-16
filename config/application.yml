@@ -1,0 +1,19 @@
+turvis:
+  application:
+    finalResponseCode:
+      override: false
+    logLevel: DEBUG
+  DSL:
+    baseDir: patterns
+    regex:
+      patternsDir: regex
+    http: 
+      baseDir: patterns
+      httpRulesDir: pattern
+      failOnFirst: false
+      output: true
+    logs:
+      logRulesDir: logs
+      logsSource: input
+      logsDestination: output
+  
