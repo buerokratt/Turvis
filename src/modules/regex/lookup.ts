@@ -9,7 +9,7 @@ export interface PatternInfo {
 }
 export function lookupRegex(path: string, parameters?: {} | []): PatternInfo {
   const filePath: PathLike = join(REGULAR_EXPRESSIONS_DIR, path);
-  let pattern: RegExp = new RegExp(readFileSync(filePath, 'utf8'));
+  let pattern = new RegExp(readFileSync(filePath, 'utf8'));
 
   if (parameters && Array.isArray(parameters)) {
     pattern = withPositionalParameters(pattern, parameters);

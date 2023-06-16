@@ -1,11 +1,4 @@
-import {
-  FastifyInstance,
-  FastifyPluginOptions,
-  FastifyReply,
-  FastifyRequest,
-  RouteHandler,
-  RouteOptions,
-} from 'fastify';
+import { FastifyInstance, FastifyPluginOptions, FastifyReply, FastifyRequest, RouteHandler } from 'fastify';
 
 import { analyze } from '../modules/analyzer/analyzer.module';
 

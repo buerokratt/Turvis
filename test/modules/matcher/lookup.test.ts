@@ -38,7 +38,7 @@ describe('lookupRegex', () => {
 
     mockReadFileSync.mockReturnValueOnce(pattern);
 
-    const result = lookupRegex(path, {minLength: 5, maxLength: 10});
+    const result = lookupRegex(path, { minLength: 5, maxLength: 10 });
 
     expect(mockReadFileSync).toHaveBeenCalledWith('patterns/expressions/' + path, 'utf8');
     expect(result).toEqual(expectedResult);
@@ -59,7 +59,5 @@ describe('lookupRegex', () => {
 
     expect(mockReadFileSync).toHaveBeenCalledWith('patterns/expressions/' + path, 'utf8');
     expect(result).toEqual(expectedResult);
-  })
-
-
+  });
 });

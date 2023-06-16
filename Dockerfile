@@ -34,5 +34,6 @@ RUN npm run build
 FROM base
 COPY --chown=node:node --from=dependencies /turvis/node_modules ./node_modules
 COPY --chown=node:node --from=build /turvis/dist ./dist
+COPY --chown=node:node config/application.yml ./config
 ENV NODE_ENV=production
 CMD npm run start:prod
