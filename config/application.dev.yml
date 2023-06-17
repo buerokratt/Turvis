@@ -8,8 +8,7 @@ turvis:
     regex:
       patternsDir: regex
     http: 
-      baseDir: patterns
-      httpRulesDir: pattern
+      httpRulesDir: rules
       failOnFirst: false
       output: true
     logs:

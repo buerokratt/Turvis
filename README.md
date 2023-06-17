@@ -112,3 +112,11 @@ it is possible to pass extra parameters to regex:
    `/regex/oneOf?params=a&params=b&params=c` and the pattern would be:
    `__1__|__2___|__3__` 
 
+## Feature/20
+Environment specific configuration with application.yml. It enables configuration for:
+- directories for regular expressions, 
+- directories for logs input/output and DSLs
+- directory for http validation DSL
+- specify what application.yml file to use through NODE_ENV variable: currently dev or prod only
+- in docker build it defaults to dev, so it should be overridden for production
+

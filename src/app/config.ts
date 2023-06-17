@@ -16,7 +16,6 @@ interface DSLConfig {
     patternsDir: string;
   };
   http: {
-    baseDir: string;
     httpRulesDir: string;
     failOnFirst: boolean;
     output: boolean;
@@ -35,9 +34,9 @@ export interface Config {
 
 let configuration: Config | null = null;
 
-const get = (): Config | null => {
+const get = (env: string): Config | null => {
   if (configuration === null) {
-    const configFilePath = path.join(process.cwd(), 'config', 'application.yml');
+    const configFilePath = path.join(process.cwd(), 'config', `application.${env}.yml`);
     const yamlConfig = fs.readFileSync(configFilePath, 'utf8');
     configuration = yaml.load(yamlConfig) as Config;
   }
