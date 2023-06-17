@@ -122,3 +122,6 @@ Environment specific configuration with application.yml. It enables configuratio
 - specify what application.yml file to use through NODE_ENV variable: currently dev or prod only
 - in docker build it defaults to dev, so it should be overridden for production
 
+## Feature/14
+When ruuter-incoming endpoint is requested, it looks up default ruleset to apply and path specific.
+Rulesest are expected to be configured in `/patterns/rulesets/*` directory.
