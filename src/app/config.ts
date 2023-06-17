@@ -1,7 +1,6 @@
-import * as fs from 'fs';
+import fs from 'fs';
 import path from 'path';
-
-import * as yaml from 'js-yaml';
+import yaml from 'js-yaml';
 
 interface ApplicationConfig {
   finalResponseCode: {
@@ -32,21 +31,42 @@ export interface Config {
   DSL: DSLConfig;
 }
 
-let configuration: Config | null = null;
+export interface Configuration {
+  load: (env: string) => Configuration;
+  get: () => Config;
+}
 
-const get = (env: string): Config | null => {
-  if (configuration === null) {
+export const configuration = (): Configuration => {
+  let config: Config | null = null;
+
+  const load = (env: string): Configuration => {
+    if (config !== null) {
+      return api;
+    }
+
     const configFilePath = path.join(process.cwd(), 'config', `application.${env}.yml`);
     const yamlConfig = fs.readFileSync(configFilePath, 'utf8');
-    configuration = yaml.load(yamlConfig) as Config;
-  }
-  if (config === null || config === undefined) {
-    console.error('Application configuration not loaded!');
-    process.exit(1);
-  }
-  return configuration;
-};
+    config = yaml.load(yamlConfig) as Config;
 
-export const config = {
-  get,
-};
+    if (config === null || config === undefined) {
+      console.error('Application configuration not loaded!');
+      process.exit(1);
+    }
+
+    return api;
+  };
+
+  const get = (): Config => {
+    if (config === null) {
+      throw new Error('Application configuration not loaded!');
+    }
+    return config;
+  };
+
+  const api: Configuration = {
+    load,
+    get,
+  };
+
+  return api;
+}

@@ -1,9 +1,9 @@
-import { config } from './app/config';
+import { configuration } from './app/config';
 import { bootstrap } from './bootstrap';
 
 const environment = process.env.NODE_ENV || 'dev';
 
-const cfg = config.get(environment);
+const cfg = configuration().load(environment).get();
 
 const PORT = 8060;
 const HOST = '::';
