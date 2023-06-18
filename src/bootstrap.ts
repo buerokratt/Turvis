@@ -1,7 +1,6 @@
 import { IncomingMessage, Server, ServerResponse } from 'http';
 
 import fastify, { FastifyInstance } from 'fastify';
-
 import { incoming } from './api/incoming';
 import { regex } from './api/regex';
 

@@ -1,15 +1,12 @@
-import { configuration } from './app/config';
+import { config } from './app/config';
+config.load(process.env.NODE_ENV || 'dev');
 import { bootstrap } from './bootstrap';
-
-const environment = process.env.NODE_ENV || 'dev';
-
-const cfg = configuration().load(environment).get();
 
 const PORT = 8060;
 const HOST = '::';
 
 export const app = bootstrap({ logger: true });
-app.decorate('config', cfg).listen({ port: PORT, host: HOST }, (error, address) => {
+app.listen({ port: PORT, host: HOST }, (error, address: string) => {
   if (error) {
     console.error(error);
     process.exit(1);
