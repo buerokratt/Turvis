@@ -1,9 +1,9 @@
 import { existsSync } from 'fs';
 import { join } from 'path';
 
-import { configuration } from '../../app/config';
+import { config } from '../../app/config';
 
-const basePath = configuration().get().DSL.baseDir;
+const basePath = config.get().turvis.DSL.baseDir;
 
 export function resolveRules(httpMethod: string, requestPath: string) {
   // parse default and path specific rules. path specific might not exist

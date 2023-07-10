@@ -123,5 +123,8 @@ Environment specific configuration with application.yml. It enables configuratio
 - in docker build it defaults to dev, so it should be overridden for production
 
 ## Feature/14
-When ruuter-incoming endpoint is requested, it looks up default ruleset to apply and path specific.
-Rulesest are expected to be configured in `/patterns/rulesets/*` directory.
+- enables to configure the endpoint name and if it should be applied to GET or POST
+- in configuration file, configure the default rule to be applied if necessary.
+  - When ruuter-incoming endpoint is requested, it looks up default ruleset to apply and path specific rules to apply.
+   Rulesets are expected to be configured in `/patterns/rulesets/*` directory. the direcory itself is configured
+   in application yaml file.
