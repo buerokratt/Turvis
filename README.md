@@ -117,6 +117,8 @@ Environment specific configuration with application.yml. It enables configuratio
 - directories for regular expressions, 
 - directories for logs input/output and DSLs
 - directory for http validation DSL
+- enables to configure endpoint paths
+- enbles to configure filedrop for log analysis
 - specify what application.yml file to use through NODE_ENV variable: currently dev or prod only
 - in docker build it defaults to dev, so it should be overridden for production
 
