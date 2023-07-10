@@ -1,18 +1,32 @@
 turvis:
   application:
+    port: 8060
     finalResponseCode:
-      override: false
-    logLevel: DEBUG
+      override: 401
+    logLevel: debug
+    logToFile: false
+    logFileLocation: logs/turvis.log
   DSL:
     baseDir: patterns
     regex:
       patternsDir: regex
+      endpoint: /regex
     http: 
+      endpoint: /ruuter-incoming
       httpRulesDir: rules
       failOnFirst: false
       output: true
+      defaultRuleset:
+        enabled: true
+        filename: default_ruleset.yml
+        methods: [POST, GET]
     logs:
       logRulesDir: logs
-      logsSource: input
-      logsDestination: output
+      logsSourceDir: filedrop/incoming
+      logsDestinationDir: filedrop/processed
+      logsFailedDestinationDir: filedrop/failed
+      maxConcurrency: 3
+      maxRetries: 3
+      retryDelay: 1000
+
   

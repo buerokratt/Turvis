@@ -30,6 +30,7 @@
   },
   "homepage": "https://github.com/buerokratt/turvis#readme",
   "dependencies": {
+    "class-validator": "^0.14.0",
     "fastify": "^4.17.0",
     "js-yaml": "^4.1.0",
     "rimraf": "^5.0.0"
