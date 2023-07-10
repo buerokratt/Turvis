@@ -128,3 +128,7 @@ Environment specific configuration with application.yml. It enables configuratio
   - When ruuter-incoming endpoint is requested, it looks up default ruleset to apply and path specific rules to apply.
    Rulesets are expected to be configured in `/patterns/rulesets/*` directory. the direcory itself is configured
    in application yaml file.
+
+## Feature/22
+- configures a logger that takes the level from config file and outputs to console/file based on config.
+- adds an interceptor for rewriting response code
