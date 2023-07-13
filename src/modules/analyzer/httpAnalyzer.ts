@@ -1,6 +1,5 @@
 
 import { ValidationRequest, ValidationResult } from '../rules/rules.module';
-import { resolveRules } from '../rules/resolve';
 
 export const analyze = (request: ValidationRequest) => {
   const analyzer = createAnalyzer();
@@ -24,7 +23,6 @@ const createAnalyzer = (): HttpAnalyzer => {
   };
 
   const parse = (): HttpAnalyzer => {
-    const paths = resolveRules(request.method, request.path);
     return api;
   };
 

@@ -8,7 +8,7 @@ describe('noDuplicates', () => {
       Accept: 'application/json',
     };
 
-    const result = noDuplicates(headers);
+    const { result } = noDuplicates(headers);
 
     expect(result).toBe(true);
   });
@@ -30,9 +30,7 @@ describe('noDuplicates', () => {
 
   it('should return true when the headers object is empty', () => {
     const headers = {};
-
-    const result = noDuplicates(headers);
-
+    const { result } = noDuplicates(headers);
     expect(result).toBe(true);
   });
 });

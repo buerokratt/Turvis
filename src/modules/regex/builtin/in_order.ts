@@ -1,22 +1,33 @@
-export function inOrder(headers: string[], expectedOrder: string[]): boolean {
-  const headerIndices = new Map<string, number>();
+import { ExecutionResult } from '../regex.module';
 
-  for (let i = 0; i < headers.length; i++) {
-    const header = headers[i];
-    headerIndices.set(header, i);
+export function inOrder(headers: string[], expectedOrder: string[]): ExecutionResult {
+  if (!headers) {
+    return {
+      value: headers,
+      name: 'inOrder',
+      result: false,
+    };
   }
 
   let prevIndex = -1;
 
   for (const expectedHeader of expectedOrder) {
-    const currentIndex = headerIndices.get(expectedHeader);
+    const currentIndex = headers.indexOf(expectedHeader);
 
-    if (currentIndex === undefined || currentIndex < prevIndex) {
-      return false;
+    if (currentIndex === -1 || currentIndex < prevIndex) {
+      return {
+        value: headers,
+        name: 'inOrder',
+        result: false,
+      };
     }
 
     prevIndex = currentIndex;
   }
 
-  return true;
+  return {
+    value: headers,
+    name: 'inOrder',
+    result: true,
+  };
 }

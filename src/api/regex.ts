@@ -2,11 +2,13 @@ import { IncomingHttpHeaders } from 'http';
 
 import { FastifyInstance, FastifyPluginOptions, FastifyReply, FastifyRequest } from 'fastify';
 
-import { ExecutionResult } from '../modules/regex/execute';
 import { PatternInfo } from '../modules/regex/lookup';
 import { expressions } from '../modules/regex/regex.module';
+import { logger } from '../app/logger';
+import { config } from '../app/config';
+import { ExecutionResult } from 'src/modules/regex/execute';
 
-export const REGEX_API_URL = '/regex';
+export const REGEX_API_URL = config.get().turvis.DSL.regex.endpoint;
 
 const regexHandler = async (request: FastifyRequest, reply: FastifyReply) => {
   const { body }: { headers: IncomingHttpHeaders; body: any } = request;
@@ -21,8 +23,10 @@ const regexHandler = async (request: FastifyRequest, reply: FastifyReply) => {
     const pattern: PatternInfo = expressions.lookup(filePath, passedParams);
     const result: ExecutionResult = expressions.execute(body, pattern);
 
-    if (result.error) {
-      throw new Error(result.error);
+    if (result.error || result.result === false) {
+      logger.debug('unable to match ' + body + '. against pattern: ' + pattern.pattern.toString());
+      result.result = false;
+      reply.code(400).send(result);
     }
     reply.code(200).send({ content: body, result: result.result });
   } catch (error) {

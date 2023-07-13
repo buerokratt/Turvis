@@ -1,9 +1,17 @@
-export function exists(headers: string[], requiredHeaders: string[]): boolean {
-  const missingHeaders = requiredHeaders.filter((header) => !headers.includes(header));
+import { ExecutionResult } from '../regex.module';
 
-  if (missingHeaders.length > 0) {
-    return false;
+export function exists(headers: string[], requiredHeaders: string[]): ExecutionResult {
+  if (!headers || requiredHeaders.some(header => !headers.includes(header))) {
+    return {
+      value: headers,
+      result: false,
+      name: 'exists',
+    };
   }
 
-  return true;
+  return {
+    value: headers,
+    result: true,
+    name: 'exists',
+  };
 }
