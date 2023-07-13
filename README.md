@@ -127,12 +127,9 @@ Environment specific configuration with application.yml. It enables configuratio
 - Adds an interceptor for rewriting response code when configured in config file
 - Improvements/refactorings to regex module.
 
-<<<<<<< HEAD
 ## Feature/14
 When ruuter-incoming endpoint is requested, it looks up default ruleset to apply and path specific.
 Rulesest are expected to be configured in `/patterns/rulesets/*` directory.
-=======
->>>>>>> 4abf396 (Update readme to reflect the canges)
 ## Feature/19, Feaure/18 and Feature/14
 this is combined PR to address all related functionality for HTTP ruleset configuration/validation.
 

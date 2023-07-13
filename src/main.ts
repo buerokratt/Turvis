@@ -1,7 +1,9 @@
 import { config } from './app/config';
 config.load(process.env.NODE_ENV || 'dev');
 import { bootstrap } from './bootstrap';
+import { watcher } from './app/watcher';
 import { logger } from './app/logger';
+import { logAnalyzer } from './modules/analyzer/logAnalyzer';
 
 const PORT = config.get().turvis.application.port || 8060;
 const HOST = config.get().turvis.application.host || '::';
@@ -16,8 +18,14 @@ const startApp = async (): Promise<void> =>
     }
   });
 
+const startWatcher = async (): Promise<void> =>
+  watcher.startWatcher(config.get().turvis.DSL.logs.logsSourceDir, async (filepath) =>
+    logAnalyzer.create().withFile(filepath).process(),
+  );
+
 const start = async (): Promise<void> => {
   try {
+    await startWatcher();
     await startApp();
   } catch (error) {
     logger.error('Error starting the application', error);
