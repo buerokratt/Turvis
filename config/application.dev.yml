@@ -2,7 +2,7 @@ turvis:
   application:
     port: 8060
     finalResponseCode:
-      override: 401
+      override: false
     logLevel: debug
     logToFile: false
     logFileLocation: logs/turvis.log
@@ -18,7 +18,7 @@ turvis:
       output: true
       defaultRuleset:
         enabled: true
-        filename: default_ruleset.yml
+        filename: default.yml
         methods: [POST, GET]
     logs:
       logRulesDir: logs

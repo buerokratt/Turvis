@@ -1,0 +1,7 @@
+ruleset:
+  headers:
+    validate:
+      cookie:
+        - rule: between
+          from: 3
+          to: 6

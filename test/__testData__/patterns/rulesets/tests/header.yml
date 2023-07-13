@@ -1,0 +1,7 @@
+ruleset:
+  headers:
+    exists: [cookie, jwt]
+    no-duplicate: true
+    validate:
+      cookie:
+        - isJwt

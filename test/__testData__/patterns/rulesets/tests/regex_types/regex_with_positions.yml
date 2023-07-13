@@ -1,0 +1,5 @@
+ruleset:
+  headers:
+    validate:
+      cookie:
+        - oneof: [a, b, c]

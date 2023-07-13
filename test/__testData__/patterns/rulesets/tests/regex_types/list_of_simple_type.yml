@@ -1,0 +1,7 @@
+ruleset:
+  headers:
+    validate:
+      cookie:
+        - jwt
+        - numeric
+        # - endsWith: .yml

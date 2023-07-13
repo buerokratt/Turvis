@@ -1,0 +1,4 @@
+ruleset:
+  headers:
+    exists: []
+    noDuplicate: true

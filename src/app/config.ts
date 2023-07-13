@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import yaml from 'js-yaml';
 import { IsArray, IsBoolean, IsNotEmpty, IsNumber, IsString, ValidateNested, isString, validateSync } from 'class-validator';
+import { isArray } from '../utils/typeUtils';
 
 class ResponseCode {
   @IsNotEmpty()
@@ -160,7 +161,10 @@ const load = (env: string): void => {
 const deepObjectMapping = (target: any, source: any): void => {
   for (const key in source) {
     if (source.hasOwnProperty(key) && target.hasOwnProperty(key)) {
-      if (typeof target[key] === 'object' && typeof source[key] === 'object') {
+      if(isArray(source[key]) && isArray(target[key])) {
+        target[key] = source[key];
+      }
+      else if (typeof target[key] === 'object' && typeof source[key] === 'object') {
         deepObjectMapping(target[key], source[key]);
       } else {
         target[key] = source[key];

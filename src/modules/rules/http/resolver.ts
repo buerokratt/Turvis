@@ -3,14 +3,18 @@ import { join } from 'path';
 import { config } from '../../../app/config';
 
 const httpRulesBasePath = join(config.get().turvis.DSL.baseDir, config.get().turvis.DSL.http.httpRulesDir);
-const { defaultRuleset } = config.get().turvis.DSL.http;
+const { defaultRuleset } = config.get().turvis.DSL.http;
 
-export function resolveHttpRules(httpMethod: string, requestPath: string): { default: string, request: string } {
+export function resolveHttpRules(httpMethod: string, requestPath: string): { default: string; request: string } {
   let defaultRules = undefined;
   let pathRules = undefined;
 
-  if(defaultRuleset.enabled && defaultRuleset.methods.includes(httpMethod)) {
-    defaultRules = resolveDefault(httpMethod, defaultRuleset.filename || 'default.yml');
+  console.log("default ruelset:", defaultRuleset);
+
+
+  if (defaultRuleset.enabled && defaultRuleset.methods.includes(httpMethod)) {
+    console.log("load default rules: ", defaultRuleset.filename);
+    defaultRules = resolveDefault(httpMethod, defaultRuleset.filename || 'default.yml');
   }
 
   try {
@@ -33,7 +37,7 @@ export function resolve(httpMethod: string, requestPath: string) {
 }
 
 export function resolveDefault(httpMethod: string, filename: string) {
-  const filePath = join(httpRulesBasePath, 'general', httpMethod, filename || 'default.yml');
+  const filePath = join(httpRulesBasePath, 'general', httpMethod, filename || 'default.yml');
   if (!existsSync(filePath)) {
     throw new Error(`Rules file ${filePath} does not exist`);
   }

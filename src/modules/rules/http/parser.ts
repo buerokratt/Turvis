@@ -45,15 +45,21 @@ export interface ParseConfig {
 }
 
 export function parse(rules: ParserInput, config: ParseConfig): Rules<Ruleset> {
-  const defaultDocument: Array<Ruleset> = parseRules(rules.default!, { method: config.method });
-  let requestDocument: Array<Ruleset> = [];
+  let ruleDocuments: Array<Ruleset> = [];
+
+  if (rules.default) {
+    const defaultDocument: Array<Ruleset> = parseRules(rules.default!, { method: config.method });
+    ruleDocuments = [...defaultDocument];
+  }
 
   if (rules.request) {
-    requestDocument = parseRules(rules.request!, { method: config.method });
+    let requestPathDocument: Array<Ruleset> = [];
+    requestPathDocument = parseRules(rules.request!, { method: config.method });
+    ruleDocuments = [...requestPathDocument];
   }
 
   return {
-    documents: [...defaultDocument, ...requestDocument],
+    documents: ruleDocuments,
   };
 }
 
