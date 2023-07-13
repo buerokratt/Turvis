@@ -1,42 +1,44 @@
-import { PathOrFileDescriptor } from 'fs';
-
+import { isJSON } from '../../utils/objectUtils';
+import { logger } from '../../app/logger';
 import { PatternInfo } from './lookup';
+import { RegexExecutionResult } from './regex.module';
+import { isObject } from 'class-validator';
 
-export type ExecutionResult = {
-  value: string;
-  patternFile: string;
-  pattern?: RegExp;
-  result?: boolean;
-  error?: string;
-};
+export function execute(content: any, patternInfo: PatternInfo): RegexExecutionResult {
+  let regex!: RegExp;
+  let result: boolean;
 
-const directory: PathOrFileDescriptor = './patterns/expressions';
-
-export function execute(content: string, pattern: PatternInfo): ExecutionResult {
   try {
-    const regex = pattern.pattern;
-    let result;
-    if (typeof content !== 'string') {
+    regex = patternInfo.pattern instanceof RegExp ? patternInfo.pattern : new RegExp(patternInfo.pattern);
+    logger.debug('Executing pattern ' +  regex + " against content: " +  content);
+
+    if (typeof content === 'string') {
+      result = regex.test(content);
+    } else if (isJSON(content) || isObject(content)) {
       result = regex.test(JSON.stringify(content));
     } else {
-      result = regex.test(content);
+      result = regex.test(content.toString());
     }
 
     if (!result) {
-      throw new Error('unable to match ' + content + '. used pattern: ' + pattern.pattern);
+      const message = `Unable to match pattern ${regex.toString()} against content: ${content.toString()}`;
+      logger.debug(message);
+      throw new Error(message);
     }
+
     return {
       value: content,
-      patternFile: pattern.path,
-      pattern: pattern.pattern,
+      patternFile: patternInfo.path,
+      pattern: regex,
       result,
     };
   } catch (error) {
     return {
       value: content,
-      patternFile: pattern.path,
-      pattern: pattern.pattern,
+      patternFile: patternInfo.path,
+      pattern: regex ? regex : patternInfo.pattern,
       error: `Error executing pattern: ${(error as Error).message}`,
+      result: false,
     };
   }
 }

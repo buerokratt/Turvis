@@ -2,6 +2,7 @@ import { readFileSync } from 'fs';
 import { join } from 'path';
 
 import { config } from '../../app/config';
+import { logger } from 'src/app/logger';
 
 const REGULAR_EXPRESSIONS_DIR = config.get().turvis.DSL.regex.patternsDir;
 const BASE_DIR = config.get().turvis.DSL.baseDir;
@@ -15,7 +16,7 @@ export function lookupRegex(path: string, parameters?: {} | []): PatternInfo {
   const filePath = join(BASE_DIR, REGULAR_EXPRESSIONS_DIR, path);
   const fileContent = readFileSync(filePath, 'utf8');
   if (!fileContent || fileContent.length === 0) {
-    throw new Error('Pattern file is empty!');
+    throw new Error(`Pattern file ${filePath} is empty!`);
   }
 
   let pattern = new RegExp(fileContent);
