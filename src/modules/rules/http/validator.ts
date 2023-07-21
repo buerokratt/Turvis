@@ -26,11 +26,11 @@ export interface Validator {
 
 export function createValidator(): Validator {
   let validatableData: ValidationInput;
+  const failOnFirst = config.get().turvis.DSL.http.failOnFirst;
 
   function validate(req: ValidationInput, rules: Rules<Ruleset>): ValidationResult {
     validatableData = req;
 
-    const failOnFirst = config.get().turvis.DSL.http.failOnFirst;
     const executionContext = new HttpValidationContext(failOnFirst);
     if (!rules.documents) {
       return { status: 'success' };
@@ -58,7 +58,9 @@ export function createValidator(): Validator {
       ruleset.body?.forEach((validator) => {
         processValidation(validator, ruleset.id, validatableData.body, executionContext);
       });
-    } catch (error) {}
+    } catch (error) {
+      logger.error('request validation failed!', error);
+    }
   }
 
   function processValidation(

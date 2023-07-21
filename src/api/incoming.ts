@@ -1,6 +1,7 @@
-import { FastifyInstance, FastifyPluginOptions, FastifyReply, FastifyRequest, RouteHandler } from 'fastify';
+import { FastifyInstance, FastifyPluginOptions, FastifyReply, FastifyRequest, RouteHandler, ValidationResult } from 'fastify';
 
 import { httpAnalyzer } from '../modules/analyzer/analyzer.module';
+import { config } from '../app/config';
 
 const API_URL = '/ruuter-incoming';
 
@@ -10,10 +11,16 @@ const handleRequest: RouteHandler = async (
 ) => {
   const path = raw.url?.replace(API_URL, '') ?? '';
   const results = httpAnalyzer.analyze({ path, method, headers, query, body });
+
+  const response = config.get().turvis.DSL.http.output === false ? {
+    status: results.status
+  } :
+    results;
+
   if (results.status === 'failure') {
-    reply.code(400).send(results);
+    reply.code(400).send(response);
   } else {
-    reply.send(results);
+    reply.send(response);
   }
 };
 

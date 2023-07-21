@@ -9,11 +9,7 @@ export function resolveHttpRules(httpMethod: string, requestPath: string): { def
   let defaultRules = undefined;
   let pathRules = undefined;
 
-  console.log("default ruelset:", defaultRuleset);
-
-
   if (defaultRuleset.enabled && defaultRuleset.methods.includes(httpMethod)) {
-    console.log("load default rules: ", defaultRuleset.filename);
     defaultRules = resolveDefault(httpMethod, defaultRuleset.filename || 'default.yml');
   }
 

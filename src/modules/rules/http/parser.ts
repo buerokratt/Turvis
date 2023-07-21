@@ -15,6 +15,7 @@ import { dotNotationLookup } from '../../regex/lookup';
 import { ExecutionResult, RegexExecutionResult } from '../../regex/regex.module';
 import { exactCount } from '../../regex/builtin/exact_count';
 import { noDuplicates } from '../../regex/builtin/no_duplicates';
+import { logger } from '../../../app/logger';
 
 export interface ValidationRule {
   name: string;
@@ -290,6 +291,7 @@ function mapToValidatorFunction(rule: any) {
  */
 function wrapMatcher(matcherName: string, value: any, matcherFn: Function) {
   try {
+    logger.debug(`Executing matcher ${matcherName} with value ${value}`);
     return matcherFn();
   } catch (error) {
     console.error((error as any).message);

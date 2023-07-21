@@ -1,13 +1,11 @@
 import * as chokidar from 'chokidar';
-import * as path from 'path';
-import limit from 'p-limit';
-import { logAnalyzer } from '../modules/analyzer/logAnalyzer';
 import { logger } from './logger';
 import { config } from './config';
+import pLimit from 'p-limit';
 
 const MAX_RETRIES = config.get().turvis.DSL.logs.maxRetries || 3;
 const RETRY_DELAY_MS = config.get().turvis.DSL.logs.retryDelay || 1000;
-const fileProcessor = limit(config.get().turvis.DSL.logs.maxConcurrency || 2);
+const fileProcessor = pLimit(config.get().turvis.DSL.logs.maxConcurrency || 2);
 let restartCount = 0;
 
 function start(directory: string, processFileCallback: (filePath: string) => Promise<void>): void {
