@@ -33,14 +33,13 @@ export const logAnalyzer = {
     };
 
     const createValidators = (inputFile: string) => {
-      const ruleFiles: string[] = logRulesResolver.resolve(inputFile);
-      const rules = ruleFiles
-        .map((filePath: string) => {
-          return logRulesParser.parse(filePath);
-        })
-        .map((rules: LogRules) => logValidator.create(rules));
+      const rulesFilePaths: string[] = logRulesResolver.resolveAll(inputFile);
 
-      return rules;
+      const ruleFiles = rulesFilePaths.map((filePath: string) => {
+        return logRulesParser.parse(filePath);
+      }).map((rules: LogRules) => logValidator.create(rules));
+
+      return ruleFiles;
     };
 
     const process = (): void => {
@@ -54,8 +53,9 @@ export const logAnalyzer = {
         lineReader.on('line', (line: string) => {
           try {
             const validationResults = validators.map((validator) => validator.validate(line));
+
             if (validationResults.some((result) => result.status === 'failure')) {
-              createErrorEntry(validationResults, line, lineNumber, outputFileStream);
+               createErrorEntry(validationResults, line, lineNumber, outputFileStream);
             }
           } catch (e) {
             logger.warn('Error validating line:', e);
@@ -85,15 +85,16 @@ export const logAnalyzer = {
     ) {
       const failedLogEntry = `failed line: ${lineNumber}: ${line}`;
       outputFileStream.write(failedLogEntry + '\n');
-      validationResults
-        .filter((result) => result.status === 'failure')
-        .forEach((validationResult) => {
-          outputFileStream.write(`\t${validationResult.id}:\n`);
-          createFailedLogEntry(validationResult, outputFileStream);
-        });
+      validationResults.filter((result) => result.status === 'failure').forEach((validationResult) => {
+        outputFileStream.write(`\t${validationResult.id}:\n`);
+        createFailedLogEntry(validationResult, outputFileStream);
+      });
     }
 
-    function createFailedLogEntry(validationResult: LogValidationResult, outputFileStream: fs.WriteStream) {
+    function createFailedLogEntry(
+      validationResult: LogValidationResult,
+      outputFileStream: fs.WriteStream,
+    ) {
       validationResult.details
         .filter((failure) => failure.result.result === false)
         .map((failure) => {
