@@ -1,0 +1,8 @@
+ruleset:
+  body:
+    - generic.jwt
+    - rule: generic.between
+      from: 10
+      to: 15
+    - endsWith: .yml
+    - general.oneof: [a, b, c]

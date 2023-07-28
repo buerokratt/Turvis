@@ -1,0 +1,3 @@
+ruleset:
+  query:
+    exists: [firstname]
