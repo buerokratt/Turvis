@@ -2,7 +2,7 @@ import { PathLike, readFileSync } from 'fs';
 
 import * as yaml from 'js-yaml';
 
-import { mapToKeyValue } from '../../../utils/objectUtils';
+import { hasElement, mapToKeyValue } from '../../../utils/objectUtils';
 import { hasSingleKey } from '../../../utils/objectUtils';
 import { isArray } from '../../../utils/typeUtils';
 import { isObject } from '../../../utils/typeUtils';
@@ -16,6 +16,7 @@ import { ExecutionResult, RegexExecutionResult } from '../../regex/regex.module'
 import { exactCount } from '../../regex/builtin/exact_count';
 import { noDuplicates } from '../../regex/builtin/no_duplicates';
 import { logger } from '../../../app/logger';
+import { wrap } from 'module';
 
 export interface ValidationRule {
   name: string;
@@ -161,18 +162,22 @@ function extractBodyValidations(document: any) {
   }
 
   const validations: Array<ValidationRule> = body.map((item: any) => {
-    const name = isObject(item) ? extractName(item) : item;
-    const match = mapToValidatorFunction(item);
+    if(hasElement(item, 'selector')) {
+      return mapValidations(item.selector, item.validate, 'body');
+    } else {
+      const name = isObject(item) ? extractName(item) : item;
+      const match = mapToValidatorFunction(item);
 
-    const validation: ValidationRule = {
-      select: 'all',
-      name,
-      scope: 'body',
-      builtin: false,
-      match,
-    };
+      const validation: ValidationRule = {
+        select: 'all',
+        name,
+        scope: 'body',
+        builtin: false,
+        match,
+      };
 
-    return validation;
+      return validation;
+    }
   });
   return validations.flat();
 }
@@ -193,7 +198,7 @@ function mapBuiltin(key: string, value: any, scope: string): ValidationRule {
     match:
       matchFunctions[key] ||
       ((list: []) => {
-        console.warn(`returned default builtin validator for "${key}" that evaluates to false!`);
+        logger.warn(`returned default builtin validator for "${key}" that evaluates to false!`);
         return false;
       }),
   };
@@ -276,6 +281,9 @@ function mapToValidatorFunction(rule: any) {
       const pair = mapToKeyValue(rule);
       return createWithPositonArgumentsValidator(pair!.key, pair?.value);
     }
+    if(hasElement(rule, 'name')) {
+      return createInlinePatternRule(rule);
+    }
     throw new Error('Expected not to reach here');
   } else {
     throw new Error('Error in parsing rules! Maybe using an array as the validator type?');
@@ -294,7 +302,7 @@ function wrapMatcher(matcherName: string, value: any, matcherFn: Function) {
     logger.debug(`Executing matcher ${matcherName} with value ${value}`);
     return matcherFn();
   } catch (error) {
-    console.error((error as any).message);
+    logger.error((error as any).message);
     return {
       value: value,
       result: false,
@@ -323,6 +331,16 @@ function createWithPositonArgumentsValidator(validatorFriendlyName: string, para
     wrapMatcher(validatorFriendlyName, validatableValue, () =>
       execute(validatableValue, dotNotationLookup(validatorFriendlyName, parameters)),
     );
+}
+
+function createInlinePatternRule(element: any): any /*ValidationRule */ {
+  const patternInfo = {
+    pattern: element.pattern,
+    path: 'inline',
+  };
+
+  return (validatableValue: any): RegexExecutionResult =>
+    wrapMatcher(element.name, validatableValue, () => execute(validatableValue, patternInfo));
 }
 
 function hasObjectKeyNamedRule(obj: any): boolean {

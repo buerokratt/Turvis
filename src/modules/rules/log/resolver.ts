@@ -15,7 +15,6 @@ function resolve(logFile: string) {
 function resolveRulesDir(logFile: string) {
   const relativePath = path.relative(fileDropBaseDir, logFile);
   const componentSegment = relativePath.split('/')[1];
-  console.log("returning component directory: ", join(logRulesBasePath, componentSegment));
   return join(logRulesBasePath, componentSegment);
 }
 
@@ -28,7 +27,6 @@ function listFilesWithExtension(directoryPath: string, extension: string): strin
 function resolveAll(logFile: string) {
   const componentRulesDir = resolveRulesDir(logFile);
   const files = listFilesWithExtension(componentRulesDir, '.yml');
-  console.log("returning files: ", files);
   return files;
 }
 

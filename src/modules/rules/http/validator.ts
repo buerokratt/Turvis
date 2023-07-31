@@ -45,18 +45,18 @@ export function createValidator(): Validator {
     return executionContext.getResults();
   }
 
-  function processDocument(ruleset: Ruleset, executionContext: HttpValidationContext) {
+  function processDocument(ruleset: Ruleset, validationContext: HttpValidationContext) {
     try {
       ruleset.headers?.forEach((validator) => {
-        processValidation(validator, ruleset.id, validatableData.headers, executionContext);
+        processValidation(validator, ruleset.id, validatableData.headers, validationContext);
       });
 
       ruleset.query?.forEach((validator) => {
-        processValidation(validator, ruleset.id, validatableData.query, executionContext);
+        processValidation(validator, ruleset.id, validatableData.query, validationContext);
       });
 
       ruleset.body?.forEach((validator) => {
-        processValidation(validator, ruleset.id, validatableData.body, executionContext);
+        processValidation(validator, ruleset.id, validatableData.body, validationContext);
       });
     } catch (error) {
       logger.error('request validation failed!', error);
@@ -88,9 +88,18 @@ export function createValidator(): Validator {
 
   function extractParams(data: any, validation: any) {
     if (validation.scope === 'body') {
-      return data;
+      return (validation.scope === 'all') ? data: selectElement(validation.select);
     }
     return validation.select === 'all' ? Object.keys(data) : data[validation.select];
+  }
+
+  function selectElement(select: string) {
+    const path = select.split('.');
+    let element = validatableData.body;
+    path.forEach((p) => {
+      element = element[p];
+    });
+    return element;
   }
 
   return {

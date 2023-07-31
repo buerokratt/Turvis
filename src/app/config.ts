@@ -3,6 +3,7 @@ import path from 'path';
 import yaml from 'js-yaml';
 import { IsArray, IsBoolean, IsNotEmpty, IsNumber, IsString, ValidateNested, isString, validateSync } from 'class-validator';
 import { isArray } from '../utils/typeUtils';
+import { logger } from './logger';
 
 class ResponseCode {
   @IsNotEmpty()
@@ -144,7 +145,7 @@ const load = (env: string): void => {
   const yamlData = yaml.load(yamlConfig);
 
   if (yamlData === null || yamlData === undefined) {
-    console.error('Load: Application configuration not loaded!');
+    logger.error('Load: Application configuration not loaded!');
     process.exit(1);
   }
 
@@ -153,7 +154,7 @@ const load = (env: string): void => {
   const validationErrors = validateSync(_config, { forbidUnknownValues: true, validationError: { target: true } });
 
   if (validationErrors.length > 0) {
-    console.error('Configuration validation failed:', validationErrors);
+    logger.error('Configuration validation failed:', validationErrors);
     process.exit(1);
   }
 };
