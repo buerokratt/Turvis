@@ -127,9 +127,6 @@ Environment specific configuration with application.yml. It enables configuratio
 - Adds an interceptor for rewriting response code when configured in config file
 - Improvements/refactorings to regex module.
 
-## Feature/14
-When ruuter-incoming endpoint is requested, it looks up default ruleset to apply and path specific.
-Rulesest are expected to be configured in `/patterns/rulesets/*` directory.
 ## Feature/19, Feaure/18 and Feature/14
 this is combined PR to address all related functionality for HTTP ruleset configuration/validation.
 
@@ -203,3 +200,61 @@ map values. Regular expressions are configured to under `patterns/regex` directo
 
 
 - body validations are just plain patterns used on body string.
+
+## Feature/17
+Adds DSL support for log parsing. The module itself is configurable in `application.yml` file with following section.
+
+```
+logs:
+   logRulesDir: logs
+   logsSourceDir: filedrop/incoming
+   logsDestinationDir: filedrop/processed
+   logsFailedDestinationDir: filedrop/failed
+   maxConcurrency: 3
+   maxRetries: 3
+   retryDelay: 1000
+```
+
+- logRulesDir specifies the logs DSL relative to DSL basedir, e.g. `patterns/logs/<componentname>/*.yml`. the mapping between log file and log rule
+  is component/client based.
+   example:
+   the configuration states that application is using filedrop/incoming directory for filedrop. the structure of directories, for example for ruuter, would be:
+   `filedrop/incoming/<client_id>/ruuter/logfile_12032001`
+
+   this file will be processed according to the path section `ruuter`. the lookup for the rules is:
+   * `patterns/logs/ruuter/*.yml`
+- log analysis processes every log line against the DSLs (it will lookup all the files with `.yml` extension in the component directory. in this case, ruuter).
+- log analysis applies two different types of rules:
+  - full line regular expression
+  - positional patterns after the lines are splitted based on delimiter regex.
+- Rules can be configured similarly as with Http rules, e.g. referencing regular expressions from regex directory or configuring them inline.
+   sample rules file:
+
+   ```
+   ruleset:
+      delimiter: " "
+      linePatterns:
+         - name: general.isToken
+           param1: param
+           param2: param
+         - name: patterns.jwt
+         - name: isJwt
+           regex: abc
+         - isJwt: [a,b, c]
+         - isToken
+      positions:
+         - position: 0
+         patterns:
+            - name: timestamp
+            regex: "^\[(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})\]$"
+            - name: ip
+         - position: 1
+         patterns:
+            - name: agent
+               values: [chrome]
+
+   ```
+   - As the file monitoring relies solely on a separate functionality living outside of fastify app, it has a set of configuration for:
+     - Configuring how many times it tries to restart itself if somehow the file monitoring fails
+     - delay between retries
+     - Configuring max parallel files in processing

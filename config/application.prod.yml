@@ -18,7 +18,7 @@ turvis:
       output: false
       defaultRuleset:
         enabled: true
-        filename: default.yml
+        filename: default_ruleset.yml
         methods: [POST, GET]
     logs:
       logRulesDir: logs
@@ -28,5 +28,3 @@ turvis:
       maxConcurrency: 3
       maxRetries: 3
       retryDelay: 1000
-
-  
