@@ -18,20 +18,19 @@ export function execute(content: string, pattern: PatternInfo): ExecutionResult 
     let result;
     if (typeof content !== 'string') {
       result = regex.test(JSON.stringify(content));
-    }
-    else {
+    } else {
       result = regex.test(content);
     }
 
-    if(!result) {
-      throw new Error("unable to match " + content + ". used pattern: " + pattern.pattern);
+    if (!result) {
+      throw new Error('unable to match ' + content + '. used pattern: ' + pattern.pattern);
     }
     return {
       value: content,
       patternFile: pattern.path,
       pattern: pattern.pattern,
       result,
-    }
+    };
   } catch (error) {
     return {
       value: content,

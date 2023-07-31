@@ -5,16 +5,17 @@
   "main": "src/main.ts",
   "scripts": {
     "start": "npm run build && node dist/main",
-    "start:dev": "tsc -w & nodemon -q -w dist dist/main",
+    "start:dev": "tsc -p tsconfig.build.json -w & nodemon -q -w dist dist/main",
     "start:prod": "node dist/main",
     "prebuild": "rimraf dist",
-    "build": "tsc -p tsconfig.json",
+    "build": "tsc -p tsconfig.build.json && npm run copy-config",
+    "copy-config": "copyfiles 'config/**/*.yml' dist",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:e2e": "jest --config ./test/jest-e2e.json --passWithNoTests",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "format:check": "prettier --check \"src/**/*.ts\"",
+    "format:check": "prettier --check \"{src,test}/**/*.ts\"",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "lint:check": "eslint \"{src,apps,libs,test}/**/*.ts\""
   },
@@ -29,14 +30,19 @@
   },
   "homepage": "https://github.com/buerokratt/turvis#readme",
   "dependencies": {
-    "concurrently": "^8.0.1",
+    "class-validator": "^0.14.0",
     "fastify": "^4.17.0",
+    "js-yaml": "^4.1.0",
     "rimraf": "^5.0.0"
   },
   "devDependencies": {
+    "@jest/globals": "^29.5.0",
+    "@types/jest": "^29.5.2",
+    "@types/js-yaml": "^4.0.5",
     "@types/node": "^20.1.0",
     "@typescript-eslint/eslint-plugin": "^5.59.2",
     "@typescript-eslint/parser": "^5.59.2",
+    "copyfiles": "^2.4.1",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-prettier": "^4.2.1",
@@ -44,6 +50,7 @@
     "jest": "^29.5.0",
     "nodemon": "^2.0.22",
     "prettier": "^2.8.8",
+    "ts-jest": "^29.1.0",
     "typescript": "^5.0.4"
   }
 }
