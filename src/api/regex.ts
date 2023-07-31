@@ -30,6 +30,7 @@ const regexHandler = async (request: FastifyRequest, reply: FastifyReply) => {
     }
     reply.code(200).send({ content: body, result: result.result });
   } catch (error) {
+    logger.debug("Failed to execute regex against '" + body + '": ' + (error as any).message);
     reply.code(400).send((error as any).message);
   }
 };

@@ -1,0 +1,45 @@
+ruleset:
+  use:
+    - /headers/template_1
+    - /content/template_2
+  headers:
+    exists: [cookie, jwt]
+    no-duplicate: true
+    validate:
+      # Authority: ## causes error due not having value
+      cookie:
+        - generic.isJwt
+        - generic.noMaliciousCode
+      cache:
+        - no-cache
+      X-CSRF-Token: headers.validateToken
+      mime-type:
+        - rule: general.withoutArgs
+      X-Custom-Header: general.between ## check if they work the same
+      x-Custom-Header: general.between ## check if they work the same
+      referer:
+        - rule: general.between
+          begin: 10
+          end: 20
+        - endsWith: .yml
+        - general.isJwt
+        - generic.oneof: [a, b, c]
+  query:
+    exists: [firstName, lastName]
+    exclude: [age]
+    inOrder: [firstName, lastName]
+    unique: true
+    validate:
+      firstName: [is_name, nonzero]
+      lastName: 
+        - is_name
+        - notEmpty
+      email: [valid_email]
+      age: ['between']
+  body: 
+      - keysInOrder: <filename>
+      - isValidJson
+      - select: json.path.to.key
+        validate: 
+        - isString
+        - hasValue

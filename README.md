@@ -125,6 +125,81 @@ Environment specific configuration with application.yml. It enables configuratio
 ## Feature/22
 - adds a logger that takes the level from config file and outputs to console/file based on config.
 - Adds an interceptor for rewriting response code when configured in config file
-When 
 - Improvements/refactorings to regex module.
 
+## Feature/14
+When ruuter-incoming endpoint is requested, it looks up default ruleset to apply and path specific.
+Rulesest are expected to be configured in `/patterns/rulesets/*` directory.
+## Feature/19, Feaure/18 and Feature/14
+this is combined PR to address all related functionality for HTTP ruleset configuration/validation.
+
+ ### Configurable HTTP validation
+   ´´´
+    http: 
+      endpoint: /ruuter-incoming
+      httpRulesDir: rules
+      failOnFirst: false
+      output: true
+      defaultRuleset:
+        enabled: true
+        filename: default.yml
+        methods: [POST, GET]
+   ´´´
+   -  `output: true` specifies that when running a validation, it will provide individual results for every pattern that was executed
+   -  `defaultRuleset` configuration object enables configuring the default ruleset to be applied to every request.
+   -  `failOnFirst` allows to configure if the ruleset will be run fully, even if any of the validations failed. If the value is set to `true` then
+   it will fail on first validation error
+   - It is possible to configure the endpoint address that is being used for accepting incoming requests
+
+   ### Rulesets 
+   -  by default, configuration specifies that all the DSL rules are located under patterns/rules/* directory.
+   -  All the requests go through default (if enabled) and path specific validation. For ezample, if the request is 
+   `GET /ruuter-incoming/csa/path` then rules file is being searched for in `patterns/rules/GET/csa/path/path.yaml`
+   - Rules file enables to reference other validation files in `patterns/rules/general/{GET, POST}/filename.yml` by defining "use" in yaml file
+   sample:
+
+   ```
+   ruleset:
+      use: 
+      - token.yml
+   ```
+
+   Now, more thorough example:
+   
+   ```
+   ruleset:
+      headers:
+         exists: [cache]
+         inOrder: [firstname, lastname, email]
+         validate:
+            cookie:
+            - generic.jwt
+            cache:
+            - generic.hasValue
+            X-CSRF-Token: generic.jwt 
+            mime-type:
+            - rule: generic.hasValue
+            referer:
+            - rule: generic.between
+               from: 10
+               to: 20
+            - generic.oneof: [a, b, c, d]
+      query:
+         exists: [firstname, lastname]
+         inOrder: [firstname, lastname, email]
+         validate:
+            firstname: [generic.hasValue]
+            email: 
+            - generic.email
+      body:
+         - jwt
+ ```
+
+ headers and query sections have two separate working mechanisms -builtin functions and regular expressions.
+direct rules under `headers` or `query` apply on key/valu header map and the rest is individual pattern matching on
+map values. Regular expressions are configured to under `patterns/regex` directory and can be referenced from rulesetlike:
+   * isJwt -> maps directly to `patterns/regex/isjwt`
+   * general.isJwt -> maps to `patterns/regex/general/isJwt` that enables to group different patterns into different sets
+
+
+- body validations are just plain patterns used on body string.

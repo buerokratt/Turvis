@@ -1,34 +1,34 @@
+import { HttpAnalyzer } from './analyzer.module';
+import { Rules, Ruleset } from '../rules/http/parser';
+import { resolveHttpRules } from '../rules/http/resolver';
+import { ValidationInput, rules } from '../rules/rules.module';
+import { createValidator, ValidationResult } from '../rules/http/validator';
 
-import { ValidationRequest, ValidationResult } from '../rules/rules.module';
-
-export const analyze = (request: ValidationRequest) => {
+const analyze = (request: ValidationInput) => {
   const analyzer = createAnalyzer();
   return analyzer.analyze(request).parse().validate().result();
 };
 
-interface HttpAnalyzer {
-  analyze: (r: ValidationRequest) => HttpAnalyzer;
-  parse: () => HttpAnalyzer;
-  validate: () => HttpAnalyzer;
-  result: () => ValidationResult;
-}
-
 const createAnalyzer = (): HttpAnalyzer => {
-  let request: ValidationRequest;
+  let request: ValidationInput;
+  let rulesets: Rules<Ruleset>;
   let results: ValidationResult;
 
-  const analyze = (r: ValidationRequest): HttpAnalyzer => {
+  const analyze = (r: ValidationInput): HttpAnalyzer => {
     request = r;
     return api;
   };
 
   const parse = (): HttpAnalyzer => {
+    const paths = resolveHttpRules(request.method, request.path);
+    console.log('paths', paths);
+    rulesets = rules.parse(paths, { method: request.method });
     return api;
   };
 
   const validate = (): HttpAnalyzer => {
-    // TODO: do the actual validations
-    results = { status: 'success' }
+    const validator = createValidator();
+    results = validator.validate(request, rulesets);
     return api;
   };
 
@@ -44,4 +44,8 @@ const createAnalyzer = (): HttpAnalyzer => {
   };
 
   return api;
+};
+
+export const httpAnalyzer = {
+  analyze,
 };

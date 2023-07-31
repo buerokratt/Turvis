@@ -1,0 +1,4 @@
+ruleset:
+  headers:
+    validate:
+      cookie: jwt

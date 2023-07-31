@@ -1,6 +1,6 @@
 import { FastifyInstance, FastifyPluginOptions, FastifyReply, FastifyRequest, RouteHandler } from 'fastify';
 
-import { analyze } from '../modules/analyzer/analyzer.module';
+import { httpAnalyzer } from '../modules/analyzer/analyzer.module';
 
 const API_URL = '/ruuter-incoming';
 
@@ -9,7 +9,7 @@ const handleRequest: RouteHandler = async (
   reply: FastifyReply,
 ) => {
   const path = raw.url?.replace(API_URL, '') ?? '';
-  const results = analyze({ path, method, headers, query, body });
+  const results = httpAnalyzer.analyze({ path, method, headers, query, body });
   if (results.status === 'failure') {
     reply.code(400).send(results);
   } else {

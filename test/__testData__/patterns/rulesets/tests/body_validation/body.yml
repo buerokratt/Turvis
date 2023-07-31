@@ -1,0 +1,5 @@
+ruleset:
+  body:
+    - rule: between
+      from: 3
+      to: 6

@@ -1,17 +1,17 @@
-import { analyze } from './httpAnalyzer';
+import { ValidationResult } from '../rules/http/validator';
+import { ValidationInput } from '../rules/rules.module';
+import { httpAnalyzer } from './httpAnalyzer';
 
-export type AnalyzerConfig = {
-  rules: any;
-  failOnFirst?: boolean;
-  showFullResult?: boolean;
-};
+export interface HttpAnalyzer {
+  analyze: (r: ValidationInput) => HttpAnalyzer;
+  parse: () => HttpAnalyzer;
+  validate: () => HttpAnalyzer;
+  result: () => ValidationResult;
+}
 
-export interface ValidationRequest {
-    path: string;
-    method: string;
-    headers?: any;
-    query?: any;
-    body?: any;
-  }
+export interface LogAnalyzer {
+  withFile(filePath: string): LogAnalyzer;
+  process(): void;
+}
 
-export { analyze };
+export { httpAnalyzer };
