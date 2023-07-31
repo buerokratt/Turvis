@@ -9,8 +9,12 @@ const handleRequest: RouteHandler = async (
   reply: FastifyReply,
 ) => {
   const path = raw.url?.replace(API_URL, '') ?? '';
-  analyze(path, method, headers, query, body);
-  reply.send({ code: 200, status: 'OK' });
+  const results = analyze({ path, method, headers, query, body });
+  if (results.status === 'failure') {
+    reply.code(400).send(results);
+  } else {
+    reply.send(results);
+  }
 };
 
 export const incoming = {

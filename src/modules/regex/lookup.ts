@@ -1,28 +1,42 @@
-import { PathLike, readFileSync } from 'fs';
+import { readFileSync } from 'fs';
 import { join } from 'path';
 
-const REGULAR_EXPRESSIONS_DIR = 'patterns/expressions';
+import { config } from '../../app/config';
+
+const REGULAR_EXPRESSIONS_DIR = config.get().turvis.DSL.regex.patternsDir;
+const BASE_DIR = config.get().turvis.DSL.baseDir;
 
 export interface PatternInfo {
   pattern: RegExp;
   path: string;
 }
-export function lookupRegex(path: string, parameters?: {} | []): PatternInfo {
-  const filePath: PathLike = join(REGULAR_EXPRESSIONS_DIR, path);
-  let pattern = new RegExp(readFileSync(filePath, 'utf8'));
 
-  if (parameters && Array.isArray(parameters)) {
+export function lookupRegex(path: string, parameters?: {} | []): PatternInfo {
+  const filePath = join(BASE_DIR, REGULAR_EXPRESSIONS_DIR, path);
+  const fileContent = readFileSync(filePath, 'utf8');
+  if (!fileContent || fileContent.length === 0) {
+    throw new Error('Pattern file is empty!');
+  }
+
+  let pattern = new RegExp(fileContent);
+
+  if (Array.isArray(parameters)) {
     pattern = withPositionalParameters(pattern, parameters);
   }
 
-  if (parameters && typeof parameters === 'object') {
+  if (typeof parameters === 'object') {
     pattern = withNamedParameters(pattern, parameters);
   }
-
+  
   return {
     pattern,
     path,
   };
+}
+
+export function dotNotationLookup(path: string, parameters?: {} | []): PatternInfo {
+  const replaced = path.replace('.', '/');
+  return lookupRegex(replaced, parameters);
 }
 
 function withNamedParameters(pattern: RegExp, parameters: {}): RegExp {

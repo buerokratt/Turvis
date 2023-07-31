@@ -1,11 +1,56 @@
+import { FastifyInstance } from 'fastify';
 import { readFileSync } from 'fs';
+import { bootstrap } from 'src/bootstrap';
 
-import { app } from 'src/main';
+jest.mock('src/app/config', () => ({
+  config: {
+    load: jest.fn(),
+    get: jest.fn(() => {
+      return {
+        turvis: {
+          application: {
+            logLevel: 'info',
+            finalResponseCode: {
+              override: false,
+            },
+          },
+          DSL: {
+            baseDir: 'patterns',
+            regex: {
+              patternsDir: 'regex',
+            },
+            http: {
+              httpRulesDir: 'rulesets',
+            },
+            logs: {
+              logRulesDir: 'logs',
+              logsSourceDir: 'filedrop/incoming',
+            },
+          },
+        },
+      };
+    }),
+  },
+}));
 
 jest.mock('fs');
 
 describe('Regex API test', () => {
   const mockReadFileSync = readFileSync as jest.Mock;
+  const app: FastifyInstance = bootstrap();
+
+  beforeAll(async () => {
+    app.listen({ host: '::', port: 9999 }, (error) => {
+      if (error) {
+        console.error(error);
+        process.exit(1);
+      }
+    });
+  });
+
+  afterAll(async () => {
+    app.close();
+  });
 
   beforeEach(() => {
     mockReadFileSync.mockReset();
@@ -34,7 +79,7 @@ describe('Regex API test', () => {
       headers: {
         'Content-Type': 'text/plain',
       },
-      payload: 'margus',
+      payload: 'andy',
     });
 
     expect(response.statusCode).toBe(400);
@@ -70,21 +115,22 @@ describe('Regex API test', () => {
     });
 
     expect(response.statusCode).toBe(200);
-  }),
-    it('should execute regex against the API with positioned parameters', async () => {
-      mockReadFileSync.mockReturnValueOnce('__0__|__1__|__2__');
+  });
 
-      const queryParams: any = { params: ['Arne', 'Brutus', 'Collie'] };
-      const response = await app.inject({
-        method: 'POST',
-        url: '/regex/',
-        query: queryParams,
-        headers: {
-          'Content-Type': 'text/plain',
-        },
-        payload: 'Arne',
-      });
+  it('should execute regex against the API with positioned parameters', async () => {
+    mockReadFileSync.mockReturnValueOnce('__0__|__1__|__2__');
 
-      expect(response.statusCode).toBe(200);
+    const queryParams: any = { params: ['Arne', 'Brutus', 'Collie'] };
+    const response = await app.inject({
+      method: 'POST',
+      url: '/regex/',
+      query: queryParams,
+      headers: {
+        'Content-Type': 'text/plain',
+      },
+      payload: 'Arne',
     });
+
+    expect(response.statusCode).toBe(200);
+  });
 });

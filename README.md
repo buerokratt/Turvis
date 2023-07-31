@@ -122,3 +122,9 @@ Environment specific configuration with application.yml. It enables configuratio
 - specify what application.yml file to use through NODE_ENV variable: currently dev or prod only
 - in docker build it defaults to dev, so it should be overridden for production
 
+## Feature/22
+- adds a logger that takes the level from config file and outputs to console/file based on config.
+- Adds an interceptor for rewriting response code when configured in config file
+When 
+- Improvements/refactorings to regex module.
+

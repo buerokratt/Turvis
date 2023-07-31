@@ -1,3 +1,21 @@
+import * as cfg from '../../__mocks__/config';
+jest.mock('src/app/config', () => ({
+  config: {
+    load: jest.fn(),
+    get: jest.fn(() =>{ return {
+      turvis: {
+        DSL: {
+          baseDir: 'patterns',
+          regex: {
+            patternsDir: 'regex'
+          }
+        }
+      }
+    }
+    }),
+  },
+}));
+
 import { readFileSync } from 'fs';
 
 import { lookupRegex, PatternInfo } from 'src/modules/regex/lookup';
@@ -23,7 +41,7 @@ describe('lookupRegex', () => {
 
     const result = lookupRegex(path);
 
-    expect(mockReadFileSync).toHaveBeenCalledWith('patterns/expressions/' + path, 'utf8');
+    expect(mockReadFileSync).toHaveBeenCalledWith('patterns/regex/' + path, 'utf8');
     expect(result).toEqual(expectedResult);
   });
 
@@ -40,7 +58,7 @@ describe('lookupRegex', () => {
 
     const result = lookupRegex(path, { minLength: 5, maxLength: 10 });
 
-    expect(mockReadFileSync).toHaveBeenCalledWith('patterns/expressions/' + path, 'utf8');
+    expect(mockReadFileSync).toHaveBeenCalledWith('patterns/regex/' + path, 'utf8');
     expect(result).toEqual(expectedResult);
   });
 
@@ -57,7 +75,7 @@ describe('lookupRegex', () => {
 
     const result = lookupRegex(path, ['a', 'b', 'c']);
 
-    expect(mockReadFileSync).toHaveBeenCalledWith('patterns/expressions/' + path, 'utf8');
+    expect(mockReadFileSync).toHaveBeenCalledWith('patterns/regex/' + path, 'utf8');
     expect(result).toEqual(expectedResult);
   });
 });
