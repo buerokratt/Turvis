@@ -1,0 +1,11 @@
+ruleset:
+  delimiter: \s-\s 
+  linePatterns:
+    #- name: name
+    #  param1: param
+    #  param2: param
+  positions:
+    - position: 0
+      patterns:
+        - name: timestamp
+          regex: ^\[(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})\]$
