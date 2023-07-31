@@ -145,7 +145,7 @@ const load = (env: string): void => {
   const yamlData = yaml.load(yamlConfig);
 
   if (yamlData === null || yamlData === undefined) {
-    logger.error('Load: Application configuration not loaded!');
+    console.error('Load: Application configuration not loaded!');
     process.exit(1);
   }
 
@@ -154,7 +154,7 @@ const load = (env: string): void => {
   const validationErrors = validateSync(_config, { forbidUnknownValues: true, validationError: { target: true } });
 
   if (validationErrors.length > 0) {
-    logger.error('Configuration validation failed:', validationErrors);
+    console.error('Configuration validation failed:', validationErrors);
     process.exit(1);
   }
 };
