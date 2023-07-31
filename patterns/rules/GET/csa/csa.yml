@@ -1,2 +1,27 @@
 ruleset:
-  
+  headers:
+    exists: [cache]
+    inOrder: [firstname, lastname, email]
+    validate:
+      cookie:
+        - generic.jwt
+      cache:
+        - generic.hasValue
+      X-CSRF-Token: generic.jwt 
+      mime-type:
+        - rule: generic.hasValue
+      referer:
+        - rule: generic.between
+          from: 10
+          to: 20
+        - generic.oneof: [a, b, c, d]
+  query:
+    exists: [firstname, lastname]
+    inOrder: [firstname, lastname, email]
+    validate:
+      firstname: [generic.hasValue]
+      email: 
+        - generic.email
+        #- numeric
+  body:
+    - jwt

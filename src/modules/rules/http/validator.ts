@@ -39,7 +39,7 @@ export function createValidator(): Validator {
     try {
       rules.documents.forEach((ruleset) => processDocument(ruleset, executionContext));
     } catch (error) {
-      logger.error('request validation failed', error);
+      logger.error('request validation failed', (error as any).message);
       return { status: 'failure' };
     }
     return executionContext.getResults();
@@ -59,7 +59,7 @@ export function createValidator(): Validator {
         processValidation(validator, ruleset.id, validatableData.body, validationContext);
       });
     } catch (error) {
-      logger.error('request validation failed!', error);
+      logger.error('request validation failed!', (error as any).stack);
     }
   }
 
@@ -71,7 +71,6 @@ export function createValidator(): Validator {
   ): ValidationItem {
     const params = extractParams(data, validation);
     const executionResult: ExecutionResult | RegexExecutionResult = validation.match(params);
-
     const validationResult: ValidationItem = {
       scope: validation.scope,
       validatorName: validation.name,
@@ -88,18 +87,23 @@ export function createValidator(): Validator {
 
   function extractParams(data: any, validation: any) {
     if (validation.scope === 'body') {
-      return (validation.scope === 'all') ? data: selectElement(validation.select);
+      return (validation.select === 'all') ? data: selectElement(validation.select);
     }
     return validation.select === 'all' ? Object.keys(data) : data[validation.select];
   }
 
   function selectElement(select: string) {
-    const path = select.split('.');
-    let element = validatableData.body;
-    path.forEach((p) => {
-      element = element[p];
-    });
-    return element;
+    try {
+      const path = select.split('.');
+      let element = validatableData.body;
+      path.forEach((p) => {
+        element = element[p];
+      });
+      return element;
+    }
+    catch (error) {
+      return undefined;
+    }
   }
 
   return {

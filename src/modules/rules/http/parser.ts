@@ -16,7 +16,6 @@ import { ExecutionResult, RegexExecutionResult } from '../../regex/regex.module'
 import { exactCount } from '../../regex/builtin/exact_count';
 import { noDuplicates } from '../../regex/builtin/no_duplicates';
 import { logger } from '../../../app/logger';
-import { wrap } from 'module';
 
 export interface ValidationRule {
   name: string;
