@@ -21,7 +21,6 @@ const createAnalyzer = (): HttpAnalyzer => {
 
   const parse = (): HttpAnalyzer => {
     const paths = resolveHttpRules(request.method, request.path);
-    console.log('paths', paths);
     rulesets = rules.parse(paths, { method: request.method });
     return api;
   };

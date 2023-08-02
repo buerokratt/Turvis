@@ -1,4 +1,3 @@
-import * as cfg from '../../__mocks__/config';
 jest.mock('src/app/config', () => ({
   config: {
     load: jest.fn(),

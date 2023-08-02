@@ -1,0 +1,4 @@
+ruleset:
+    linePatterns: 
+    -name: "comment"
+     regex: "^#.*$"

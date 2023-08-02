@@ -1,0 +1,96 @@
+failed line: 1: 2023/06/22 10:23:15 [error] 127.0.0.1:12345 GET /admin/login.php - Suspicious activity detected: multiple failed login attempts.
+	patterns/logs/request_id.yml:
+		failed line pattern: /^\[(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})\]$/ (timestamp)
+	patterns/logs/ruuter.yml:
+		failed at position: 0 (2023/06/22 10:23:15 [error] 127.0.0.1:12345 GET /admin/login.php) 
+		 pattern: /^\[(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})\]$/ (timestamp)
+failed line: 2: 2023/06/22 10:23:18 [error] 127.0.0.1:12345 GET /admin/login.php - Suspicious activity detected: multiple failed login attempts.
+	patterns/logs/request_id.yml:
+		failed line pattern: /^\[(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})\]$/ (timestamp)
+	patterns/logs/ruuter.yml:
+		failed at position: 0 (2023/06/22 10:23:18 [error] 127.0.0.1:12345 GET /admin/login.php) 
+		 pattern: /^\[(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})\]$/ (timestamp)
+failed line: 3: 2023/06/22 10:23:22 [error] 127.0.0.1:12345 GET /admin/login.php - Suspicious activity detected: multiple failed login attempts.
+	patterns/logs/request_id.yml:
+		failed line pattern: /^\[(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})\]$/ (timestamp)
+	patterns/logs/ruuter.yml:
+		failed at position: 0 (2023/06/22 10:23:22 [error] 127.0.0.1:12345 GET /admin/login.php) 
+		 pattern: /^\[(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})\]$/ (timestamp)
+failed line: 4: 2023/06/22 10:23:26 [error] 127.0.0.1:12345 GET /admin/login.php - Suspicious activity detected: multiple failed login attempts.
+	patterns/logs/request_id.yml:
+		failed line pattern: /^\[(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})\]$/ (timestamp)
+	patterns/logs/ruuter.yml:
+		failed at position: 0 (2023/06/22 10:23:26 [error] 127.0.0.1:12345 GET /admin/login.php) 
+		 pattern: /^\[(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})\]$/ (timestamp)
+failed line: 5: 2023/06/22 10:23:29 [error] 127.0.0.1:12345 GET /admin/login.php - Suspicious activity detected: multiple failed login attempts.
+	patterns/logs/request_id.yml:
+		failed line pattern: /^\[(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})\]$/ (timestamp)
+	patterns/logs/ruuter.yml:
+		failed at position: 0 (2023/06/22 10:23:29 [error] 127.0.0.1:12345 GET /admin/login.php) 
+		 pattern: /^\[(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})\]$/ (timestamp)
+failed line: 6: 2023/06/22 10:23:32 [error] 127.0.0.1:12345 GET /admin/login.php - Suspicious activity detected: multiple failed login attempts.
+	patterns/logs/request_id.yml:
+		failed line pattern: /^\[(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})\]$/ (timestamp)
+	patterns/logs/ruuter.yml:
+		failed at position: 0 (2023/06/22 10:23:32 [error] 127.0.0.1:12345 GET /admin/login.php) 
+		 pattern: /^\[(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})\]$/ (timestamp)
+failed line: 7: 2023/06/22 10:23:35 [error] 127.0.0.1:12345 GET /admin/login.php - Suspicious activity detected: multiple failed login attempts.
+	patterns/logs/request_id.yml:
+		failed line pattern: /^\[(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})\]$/ (timestamp)
+	patterns/logs/ruuter.yml:
+		failed at position: 0 (2023/06/22 10:23:35 [error] 127.0.0.1:12345 GET /admin/login.php) 
+		 pattern: /^\[(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})\]$/ (timestamp)
+failed line: 8: 2023/06/22 10:23:38 [error] 127.0.0.1:12345 GET /admin/login.php - Suspicious activity detected: multiple failed login attempts.
+	patterns/logs/request_id.yml:
+		failed line pattern: /^\[(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})\]$/ (timestamp)
+	patterns/logs/ruuter.yml:
+		failed at position: 0 (2023/06/22 10:23:38 [error] 127.0.0.1:12345 GET /admin/login.php) 
+		 pattern: /^\[(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})\]$/ (timestamp)
+failed line: 9: 2023/06/22 10:23:41 [error] 127.0.0.1:12345 GET /admin/login.php - Suspicious activity detected: multiple failed login attempts.
+	patterns/logs/request_id.yml:
+		failed line pattern: /^\[(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})\]$/ (timestamp)
+	patterns/logs/ruuter.yml:
+		failed at position: 0 (2023/06/22 10:23:41 [error] 127.0.0.1:12345 GET /admin/login.php) 
+		 pattern: /^\[(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})\]$/ (timestamp)
+failed line: 10: 2023/06/22 10:23:45 [error] 127.0.0.1:12345 GET /admin/login.php - Suspicious activity detected: multiple failed login attempts.
+	patterns/logs/request_id.yml:
+		failed line pattern: /^\[(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})\]$/ (timestamp)
+	patterns/logs/ruuter.yml:
+		failed at position: 0 (2023/06/22 10:23:45 [error] 127.0.0.1:12345 GET /admin/login.php) 
+		 pattern: /^\[(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})\]$/ (timestamp)
+failed line: 11: 2023/06/22 10:23:48 [error] 127.0.0.1:12345 GET /admin/login.php - Suspicious activity detected: multiple failed login attempts.
+	patterns/logs/request_id.yml:
+		failed line pattern: /^\[(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})\]$/ (timestamp)
+	patterns/logs/ruuter.yml:
+		failed at position: 0 (2023/06/22 10:23:48 [error] 127.0.0.1:12345 GET /admin/login.php) 
+		 pattern: /^\[(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})\]$/ (timestamp)
+failed line: 12: 2023/06/22 10:23:51 [error] 127.0.0.1:12345 GET /admin/login.php - Suspicious activity detected: multiple failed login attempts.
+	patterns/logs/request_id.yml:
+		failed line pattern: /^\[(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})\]$/ (timestamp)
+	patterns/logs/ruuter.yml:
+		failed at position: 0 (2023/06/22 10:23:51 [error] 127.0.0.1:12345 GET /admin/login.php) 
+		 pattern: /^\[(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})\]$/ (timestamp)
+failed line: 13: 2023/06/22 10:23:54 [error] 127.0.0.1:12345 GET /admin/login.php - Suspicious activity detected: multiple failed login attempts.
+	patterns/logs/request_id.yml:
+		failed line pattern: /^\[(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})\]$/ (timestamp)
+	patterns/logs/ruuter.yml:
+		failed at position: 0 (2023/06/22 10:23:54 [error] 127.0.0.1:12345 GET /admin/login.php) 
+		 pattern: /^\[(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})\]$/ (timestamp)
+failed line: 14: 2023/06/22 10:23:57 [error] 127.0.0.1:12345 GET /admin/login.php - Suspicious activity detected: multiple failed login attempts.
+	patterns/logs/request_id.yml:
+		failed line pattern: /^\[(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})\]$/ (timestamp)
+	patterns/logs/ruuter.yml:
+		failed at position: 0 (2023/06/22 10:23:57 [error] 127.0.0.1:12345 GET /admin/login.php) 
+		 pattern: /^\[(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})\]$/ (timestamp)
+failed line: 15: 2023/06/22 10:24:01 [error] 127.0.0.1:12345 GET /admin/login.php - Suspicious activity detected: multiple failed login attempts.
+	patterns/logs/request_id.yml:
+		failed line pattern: /^\[(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})\]$/ (timestamp)
+	patterns/logs/ruuter.yml:
+		failed at position: 0 (2023/06/22 10:24:01 [error] 127.0.0.1:12345 GET /admin/login.php) 
+		 pattern: /^\[(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})\]$/ (timestamp)
+failed line: 16: 2023/06/22 10:24:04 [error] 127.0.0.1:12345 GET /admin/login.php - Suspicious activity detected: multiple failed login attempts.
+	patterns/logs/request_id.yml:
+		failed line pattern: /^\[(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})\]$/ (timestamp)
+	patterns/logs/ruuter.yml:
+		failed at position: 0 (2023/06/22 10:24:04 [error] 127.0.0.1:12345 GET /admin/login.php) 
+		 pattern: /^\[(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})\]$/ (timestamp)

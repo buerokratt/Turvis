@@ -1,0 +1,5 @@
+`2022-06-21 12:29:17.742+03:00  INFO [9ec5153c8585c6df,9ec5153c8585c6df] --- [nio-8080-exec-1] e.b.ruuter.domain.ConfigurationInstance  : [ incoming.request] - - - - - Request received for configuration: get-message`;
+`2022-06-21 12:29:17.742+03:00  INFO [9ec5153c8585c6df,9ec5153c8585c6df] --- [nio-8080-exec-1] e.b.ruuter.domain.ConfigurationInstance  : [ incoming.request] - - - - - Request received for configuration: get-message`;
+`2022-06-21 12:29:17.742+03:00   [9ec5153c8585c6df,9ec5153c8585c6df] --- [nio-8080-exec-1] e.b.ruuter.domain.ConfigurationInstance  : [ incoming.request] - - - - - Request received for configuration: get-message`;
+`2022-06-21 12:29:17.742+03:00  INFO [9ec5153c8585c6df,9ec5153c8585c6df] --- [nio-8080-exec-1] e.b.ruuter.domain.ConfigurationInstance  : [ incoming.request] - - - - - Request received for configuration: get-message`;
+` INFO [9ec5153c8585c6df,9ec5153c8585c6df] --- [nio-8080-exec-1] e.b.ruuter.domain.ConfigurationInstance  : [ incoming.request] - - - - - Request received for configuration: get-message`;

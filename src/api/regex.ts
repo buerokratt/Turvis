@@ -3,10 +3,9 @@ import { IncomingHttpHeaders } from 'http';
 import { FastifyInstance, FastifyPluginOptions, FastifyReply, FastifyRequest } from 'fastify';
 
 import { PatternInfo } from '../modules/regex/lookup';
-import { expressions } from '../modules/regex/regex.module';
+import { ExecutionResult, expressions } from '../modules/regex/regex.module';
 import { logger } from '../app/logger';
 import { config } from '../app/config';
-import { ExecutionResult } from 'src/modules/regex/execute';
 
 export const REGEX_API_URL = config.get().turvis.DSL.regex.endpoint;
 

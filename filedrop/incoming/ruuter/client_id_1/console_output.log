@@ -1,0 +1,5 @@
+2022-06-21 12:29:17.742+03:00  INFO [9ec5153c8585c6df,9ec5153c8585c6df] --- [nio-8080-exec-1] e.b.ruuter.domain.ConfigurationInstance  : [ incoming.request] - - - - - Request received for configuration: get-message
+2022-06-21 12:29:18.027+03:00  INFO [9ec5153c8585c6df,03f0c4f392719216] --- [nio-8080-exec-1] e.b.ruuter.domain.steps.http.HttpStep    : [         http.get] http://localhost:8081/healthz - - 200 283 Executed: get_message
+2022-06-21 12:29:18.030+03:00  INFO [9ec5153c8585c6df,e57225a41b2cdf1e] --- [nio-8080-exec-1] e.b.r.domain.steps.ConfigurationStep     : [           assign] - - - - 0 Executed: assign_value
+2022-06-21 12:29:18.793+03:00  INFO [9ec5153c8585c6df,4a7e067ca0b1b46c] --- [nio-8080-exec-1] e.b.r.domain.steps.ConfigurationStep     : [           return] - - - - 763 Executed: return_value
+INFO [9ec5153c8585c6df,9ec5153c8585c6df] --- [nio-8080-exec-1] e.b.ruuter.domain.ConfigurationInstance  : [incoming.response] - - - - - Request processed for configuration: get-message

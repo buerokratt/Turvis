@@ -15,7 +15,7 @@ function getTestFile(filename: string) {
   return `${patternsRootDir}/${rulesetsDir}/tests/${filename}`;
 }
 
-describe('parsing regex jwt rule from yaml ruleset', () => {
+describe('parsing regex rulesets', () => {
   it('should find a simple (no-args) regular expression matcher for header key to validate jwt', async () => {
     const docList = rules.parseRules(getTestFile('regex_types/simple_type.yml'), { method: 'GET' });
     const jwt = docList[0].headers!.find((item: any) => item.name === 'jwt');
@@ -57,5 +57,15 @@ describe('parsing regex jwt rule from yaml ruleset', () => {
     expect(oneof).toBeDefined();
     expect(oneof!.match('a').result).toBeTruthy();
     expect(oneof!.match('abcdefghi').result).toBeFalsy();
+  });
+
+  it('should parse the body selector validation', async () => {
+    const docList = rules.parseRules(getTestFile('regex_types/regex_with_json.yml'), { method: 'POST' });
+    expect(docList.length).toBe(1);
+    const functions = docList[0].body;
+    const name = functions!.find((item: any) => item.name  === 'name');
+    expect(name).toBeDefined();
+    expect(name!.match('a').result).toBeTruthy();
+    expect(name!.match('%&/').result).toBeFalsy();
   });
 });

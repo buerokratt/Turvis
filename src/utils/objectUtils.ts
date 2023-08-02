@@ -21,6 +21,12 @@ export function hasElement(object: any, key: string): boolean {
   return false;
 }
 
+export function hasElements(object: any, keys: string[]): boolean {
+  const objectKeys = Object.keys(object);
+  const hasAllKeys = keys.every((key) => objectKeys.includes(key));
+  return hasAllKeys;
+}
+
 export function canConvertToString(value: any): boolean {
   if (typeof value === 'string') {
     return true; // Already a string

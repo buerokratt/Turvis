@@ -2,7 +2,7 @@ turvis:
   application:
     port: 8060
     finalResponseCode:
-      override: 401
+      override: false
     logLevel: debug
     logToFile: false
     logFileLocation: logs/turvis.log
@@ -28,5 +28,3 @@ turvis:
       maxConcurrency: 3
       maxRetries: 3
       retryDelay: 1000
-
-  

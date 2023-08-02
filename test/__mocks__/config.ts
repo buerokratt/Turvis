@@ -18,9 +18,9 @@ export const _config = {
         },
         logs: {
           logRulesDir: 'logs',
-          logsSourceDir: 'test/__testData__/logsSource',
-          logsDestinationDir: 'test/__testData__/logsDestination',
-          logsFailedDestinationDir: 'test/__testData__/logsFailedDestination',
+          logsSourceDir: "__testData__/filedrop/incoming",
+          logsDestinationDir: "__testData__/filedrop/processed",
+          logsFailedDestinationDir: "__testData/filedrop/failed"
         },
       },
     },

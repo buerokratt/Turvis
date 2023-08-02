@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import yaml from 'js-yaml';
-import { IsArray, IsBoolean, IsNotEmpty, IsNumber, IsString, ValidateNested, isString, validateSync } from 'class-validator';
+import { IsArray, IsBoolean, IsNotEmpty, IsNumber, IsString, ValidateNested, validateSync } from 'class-validator';
 import { isArray } from '../utils/typeUtils';
 
 class ResponseCode {

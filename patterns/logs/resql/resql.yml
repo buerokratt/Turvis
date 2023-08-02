@@ -1,0 +1,4 @@
+ruleset:
+  linePatterns:
+    - name: timestamp
+      regex: ^\[(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})\]$

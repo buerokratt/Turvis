@@ -26,11 +26,11 @@ export interface Validator {
 
 export function createValidator(): Validator {
   let validatableData: ValidationInput;
+  const failOnFirst = config.get().turvis.DSL.http.failOnFirst;
 
   function validate(req: ValidationInput, rules: Rules<Ruleset>): ValidationResult {
     validatableData = req;
 
-    const failOnFirst = config.get().turvis.DSL.http.failOnFirst;
     const executionContext = new HttpValidationContext(failOnFirst);
     if (!rules.documents) {
       return { status: 'success' };
@@ -39,26 +39,28 @@ export function createValidator(): Validator {
     try {
       rules.documents.forEach((ruleset) => processDocument(ruleset, executionContext));
     } catch (error) {
-      logger.error('request validation failed', error);
+      logger.error('request validation failed', (error as any).message);
       return { status: 'failure' };
     }
     return executionContext.getResults();
   }
 
-  function processDocument(ruleset: Ruleset, executionContext: HttpValidationContext) {
+  function processDocument(ruleset: Ruleset, validationContext: HttpValidationContext) {
     try {
       ruleset.headers?.forEach((validator) => {
-        processValidation(validator, ruleset.id, validatableData.headers, executionContext);
+        processValidation(validator, ruleset.id, validatableData.headers, validationContext);
       });
 
       ruleset.query?.forEach((validator) => {
-        processValidation(validator, ruleset.id, validatableData.query, executionContext);
+        processValidation(validator, ruleset.id, validatableData.query, validationContext);
       });
 
       ruleset.body?.forEach((validator) => {
-        processValidation(validator, ruleset.id, validatableData.body, executionContext);
+        processValidation(validator, ruleset.id, validatableData.body, validationContext);
       });
-    } catch (error) {}
+    } catch (error) {
+      logger.error('request validation failed!', (error as any).stack);
+    }
   }
 
   function processValidation(
@@ -69,7 +71,6 @@ export function createValidator(): Validator {
   ): ValidationItem {
     const params = extractParams(data, validation);
     const executionResult: ExecutionResult | RegexExecutionResult = validation.match(params);
-
     const validationResult: ValidationItem = {
       scope: validation.scope,
       validatorName: validation.name,
@@ -86,9 +87,23 @@ export function createValidator(): Validator {
 
   function extractParams(data: any, validation: any) {
     if (validation.scope === 'body') {
-      return data;
+      return (validation.select === 'all') ? data: selectElement(validation.select);
     }
     return validation.select === 'all' ? Object.keys(data) : data[validation.select];
+  }
+
+  function selectElement(select: string) {
+    try {
+      const path = select.split('.');
+      let element = validatableData.body;
+      path.forEach((p) => {
+        element = element[p];
+      });
+      return element;
+    }
+    catch (error) {
+      return undefined;
+    }
   }
 
   return {

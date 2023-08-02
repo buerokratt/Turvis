@@ -1,0 +1,10 @@
+ruleset:
+  body:
+    - selector: firstname
+      validate:
+        - generic.hasValue
+        - rule: generic.between
+          from: 10
+          to: 20
+    - generic.jwt
+    - endsWith: .yml

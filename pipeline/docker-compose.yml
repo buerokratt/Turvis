@@ -6,7 +6,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-      no_cache: true
     volumes:
       - ./test:/app/test
     ports: 

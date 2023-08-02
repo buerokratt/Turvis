@@ -1,0 +1,8 @@
+ruleset:
+  body:
+    - selector: "body.select.name"
+      validate:
+        - name: "name"
+          pattern: "^[a-zA-Z0-9_]+$"
+        - general.invalid
+    - general.isJwt
