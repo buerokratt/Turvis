@@ -131,7 +131,7 @@ Environment specific configuration with application.yml. It enables configuratio
 this is combined PR to address all related functionality for HTTP ruleset configuration/validation.
 
  ### Configurable HTTP validation
-   ´´´
+   ```
     http: 
       endpoint: /ruuter-incoming
       httpRulesDir: rules
@@ -141,7 +141,7 @@ this is combined PR to address all related functionality for HTTP ruleset config
         enabled: true
         filename: default.yml
         methods: [POST, GET]
-   ´´´
+   ```
    -  `output: true` specifies that when running a validation, it will provide individual results for every pattern that was executed
    -  `defaultRuleset` configuration object enables configuring the default ruleset to be applied to every request.
    -  `failOnFirst` allows to configure if the ruleset will be run fully, even if any of the validations failed. If the value is set to `true` then
